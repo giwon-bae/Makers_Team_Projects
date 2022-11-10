@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//testÈ²¼öºó
 public class BackgroundLoop : MonoBehaviour
 {
     private float width;
