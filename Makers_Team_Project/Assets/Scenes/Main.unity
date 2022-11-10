@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 220082349}
   m_Layer: 0
-  m_Name: pos
+  m_Name: bullet_pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
