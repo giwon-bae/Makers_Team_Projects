@@ -47,30 +47,43 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+        //Move에 있던 점프랑 슬라이드를 함수로 뺌
+        Jump();
+        Slide();
+
+
+        
+    }
+
+    public void Jump()
+    {
+        if (Input.GetKeyDown("z") && jumpCount < maxJumpCount)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
-            playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
+            playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (Input.GetKeyUp("z") && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
+    }
 
-        if (Input.GetMouseButtonDown(1))
+    public void Slide()
+    {
+        if (Input.GetKeyDown("x"))
         {
             playerCollider.offset = slideColliderOffset;
             playerCollider.size = slideColliderSize;
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetKeyUp("x"))
         {
             playerCollider.offset = ColliderOffset;
             playerCollider.size = ColliderSize;
         }
     }
 
-    private void Attack()
+    public void Attack()  //kick
     {
         curFireCool += Time.deltaTime;
         isFireReady = curFireCool > fireDelay;
