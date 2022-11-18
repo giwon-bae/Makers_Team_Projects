@@ -6,16 +6,19 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
     public int maxJumpCount = 2;
-    public int health = 100;
+    public int health = 3;
+    public int cur_exp = 0;
 
     private float fireDelay = 3f;
     private float curFireCool = 1f;
-    private int jumpCount = 0;
     private bool isGround = false;
     private bool isDead = false;
     private bool isFireReady = true;
+    private int jumpCount = 0;
+    private int req_exp = 10;
 
-    [SerializeField]GameObject bulletPrefab;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameManager gameManager;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private Transform petTransform;
@@ -44,6 +47,12 @@ public class PlayerController : MonoBehaviour
         }
         //Move();
         Attack();
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("Hello");
+            LevelUp();
+        }
     }
 
     //private void Move()
@@ -95,6 +104,16 @@ public class PlayerController : MonoBehaviour
     {
         playerCollider.offset = ColliderOffset;
         playerCollider.size = ColliderSize;
+    }
+
+    public void LevelUp()
+    {
+        if (cur_exp >= req_exp)
+        {
+            cur_exp = cur_exp - req_exp;
+            Time.timeScale = 0;
+            gameManager.AbilityEnforce();
+        }
     }
 
     private void Attack()
