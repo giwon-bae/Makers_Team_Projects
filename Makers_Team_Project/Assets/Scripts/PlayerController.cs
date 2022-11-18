@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
     public int maxJumpCount = 2;
+    public int health = 100;
 
     private float fireDelay = 3f;
     private float curFireCool = 1f;
@@ -41,33 +42,59 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Move();
+        //Move();
         Attack();
     }
 
-    private void Move()
+    //private void Move()
+    //{
+    //    if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+    //    {
+    //        jumpCount++;
+    //        playerRigidbody.velocity = Vector2.zero;
+    //        playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
+    //    }
+    //    else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+    //    {
+    //        playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
+    //    }
+
+    //    if (Input.GetMouseButtonDown(1))
+    //    {
+    //        playerCollider.offset = slideColliderOffset;
+    //        playerCollider.size = slideColliderSize;
+    //    }
+    //    else if (Input.GetMouseButtonUp(1))
+    //    {
+    //        playerCollider.offset = ColliderOffset;
+    //        playerCollider.size = ColliderSize;
+    //    }
+    //}
+
+    public void Jump()
     {
-        if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+        if (jumpCount < maxJumpCount)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
-            playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
+            playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
+    }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            playerCollider.offset = slideColliderOffset;
-            playerCollider.size = slideColliderSize;
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            playerCollider.offset = ColliderOffset;
-            playerCollider.size = ColliderSize;
-        }
+    public void SlideDown()
+    {
+        playerCollider.offset = slideColliderOffset;
+        playerCollider.size = slideColliderSize;
+    }
+
+    public void SlideUp()
+    {
+        playerCollider.offset = ColliderOffset;
+        playerCollider.size = ColliderSize;
     }
 
     private void Attack()
