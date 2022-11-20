@@ -5,20 +5,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
+    public float fireDelay = 3f;
+    public float kickDelay = 3f;
     public int maxJumpCount = 2;
     public int health = 3;
     public int cur_exp = 0;
 
-    private float fireDelay = 3f;
     private float curFireCool = 1f;
+    private float curKickCool = 0f;
     private bool isGround = false;
     private bool isDead = false;
     private bool isFireReady = true;
+    private bool isKickReady = true;
     private int jumpCount = 0;
     private int req_exp = 10;
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameManager gameManager;
+    [SerializeField] BoxCollider2D meleeArea;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private Transform petTransform;
@@ -46,7 +50,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
         //Move();
-        Attack();
+        Timer();
+        RangedAttack();
 
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -116,16 +121,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Attack()
+    public void MeleeAttack()
     {
-        curFireCool += Time.deltaTime;
-        isFireReady = curFireCool > fireDelay;
+        if (isKickReady)
+        {
+            StopCoroutine("Kick");
+            StartCoroutine("Kick");
+            curKickCool = 0f;
+        }
+    }
 
+    private void RangedAttack()
+    {
         if (isFireReady)
         {
             Instantiate(bulletPrefab, petTransform.position, petTransform.rotation);
             curFireCool = 0f;
         }
+    }
+
+    private void Timer()
+    {
+        curFireCool += Time.deltaTime;
+        isFireReady = curFireCool > fireDelay;
+        curKickCool += Time.deltaTime;
+        isKickReady = curKickCool > kickDelay;
     }
 
     private void Die()
@@ -153,5 +173,13 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGround = false;
+    }
+
+    IEnumerator Kick()
+    {
+        meleeArea.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+
+        meleeArea.enabled = false;
     }
 }
