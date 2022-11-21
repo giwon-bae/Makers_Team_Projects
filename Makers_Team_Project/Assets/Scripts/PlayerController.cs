@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour
     public float fireDelay = 3f;
     public float kickDelay = 3f;
     public int maxJumpCount = 2;
-    public int health = 3;
+    public int hp = 3;
     public int cur_exp = 0;
 
     private float curFireCool = 1f;
     private float curKickCool = 0f;
-    private bool isGround = false;
+    private bool isJump = false;
     private bool isDead = false;
     private bool isFireReady = true;
     private bool isKickReady = true;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            Debug.Log("Hello");
+            Debug.Log("Level Up");
             LevelUp();
         }
     }
@@ -101,14 +101,24 @@ public class PlayerController : MonoBehaviour
 
     public void SlideDown()
     {
+        if (isJump)
+        {
+            return;
+        }
         playerCollider.offset = slideColliderOffset;
         playerCollider.size = slideColliderSize;
+        petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
     }
 
     public void SlideUp()
     {
+        if (isJump)
+        {
+            return;
+        }
         playerCollider.offset = ColliderOffset;
         playerCollider.size = ColliderSize;
+        petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
     }
 
     public void LevelUp()
@@ -148,31 +158,40 @@ public class PlayerController : MonoBehaviour
         isKickReady = curKickCool > kickDelay;
     }
 
-    private void Die()
+    public void HpController()
     {
+        gameManager.UpdateHpIcon(hp);
+        if(hp > 0)
+        {
+            return;
+        }
+        Debug.Log("Game Over");
+        gameManager.GameOver();
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
+        //start die animation
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Dead" && !isDead)
         {
-            Die();
+            hp = 0;
+            HpController();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts[0].normal.y > 0.7f){
-            isGround = true;
+            isJump = false;
             jumpCount = 0;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGround = false;
+        isJump = true;
     }
 
     IEnumerator Kick()

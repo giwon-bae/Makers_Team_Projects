@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MosterCtrl : MonoBehaviour
 {
-    Rigidbody2D rigid;
     public float speed = 10f;
 
-    int HP = 100;
+    private Rigidbody2D rigid;
+
+    //int HP = 100;
 
     private void Awake()
     {
@@ -20,17 +21,20 @@ public class MosterCtrl : MonoBehaviour
         rigid.velocity = new Vector2(-1, rigid.velocity.y); //단순 왼쪽방향 이동  
         transform.Translate(new Vector2(-0.03f, 0));
          
-        if (HP <= 0)
-        {
-            Destroy(gameObject);
-        }
+        //if (HP <= 0)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "bullet")
+        if (collision.tag == "Player")
         {
-            HP -= 20;
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+            playerController.hp -= 1;
+            playerController.HpController();
+            Destroy(gameObject);
         }
     }
 }

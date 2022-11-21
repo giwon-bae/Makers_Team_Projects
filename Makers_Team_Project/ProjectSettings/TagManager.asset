@@ -7,7 +7,6 @@ TagManager:
   - Boss
   - Bullet
   - Enemy
-  - builet
   layers:
   - Default
   - TransparentFX
