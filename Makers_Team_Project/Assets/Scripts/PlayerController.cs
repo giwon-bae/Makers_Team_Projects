@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
     public int maxJumpCount = 2;
-
+    public int HP = 5;
     private float fireDelay = 3f;
     private float curFireCool = 1f;
     private int jumpCount = 0;
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 slideColliderOffset;
     private Vector2 slideColliderSize;
 
+
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
         ColliderSize = playerCollider.size;
         slideColliderOffset = new Vector2(playerCollider.offset.x, playerCollider.offset.y * 5f);
         slideColliderSize = new Vector2(playerCollider.size.x, playerCollider.size.y / 2f);
+
+        
     }
 
     void Update()
@@ -94,7 +97,13 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        if (collision.tag == "b_Bullet")
+            HP -= 1;
+ 
     }
+
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -102,10 +111,14 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             jumpCount = 0;
         }
+
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGround = false;
     }
+
+    
 }
