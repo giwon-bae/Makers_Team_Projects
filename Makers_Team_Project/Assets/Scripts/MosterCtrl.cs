@@ -32,8 +32,13 @@ public class MosterCtrl : MonoBehaviour
         if (collision.tag == "Player")
         {
             PlayerController playerController = collision.GetComponent<PlayerController>();
-            playerController.hp -= 1;
-            playerController.HpController();
+
+            if (playerController.isInvincibility)
+            {
+                return;
+            }
+
+            playerController.CheckHit();
             Destroy(gameObject);
         }
     }

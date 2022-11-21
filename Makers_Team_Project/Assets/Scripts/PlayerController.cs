@@ -7,18 +7,20 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 13f;
     public float fireDelay = 3f;
     public float kickDelay = 3f;
+    public float curKickCool = 3f;
+    public bool isInvincibility = false;
     public int maxJumpCount = 2;
-    public int hp = 3;
     public int cur_exp = 0;
 
     private float curFireCool = 1f;
-    private float curKickCool = 0f;
+    private float invincibilityDuration = 1f;
     private bool isJump = false;
     private bool isDead = false;
     private bool isFireReady = true;
     private bool isKickReady = true;
     private int jumpCount = 0;
     private int req_exp = 10;
+    private int hp = 3;
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameManager gameManager;
@@ -158,6 +160,12 @@ public class PlayerController : MonoBehaviour
         isKickReady = curKickCool > kickDelay;
     }
 
+    public void CheckHit()
+    {
+        StopCoroutine(Hitted());
+        StartCoroutine(Hitted());
+    }
+
     public void HpController()
     {
         gameManager.UpdateHpIcon(hp);
@@ -200,5 +208,18 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         meleeArea.enabled = false;
+    }
+
+    IEnumerator Hitted()
+    {
+        Debug.Log("Start Coroutine");
+        isInvincibility = true;
+        hp -= 1;
+        HpController();
+        //hitted motion
+        yield return new WaitForSeconds(invincibilityDuration);
+
+        Debug.Log("Stop Coroutine");
+        isInvincibility = false;
     }
 }

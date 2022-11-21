@@ -12,11 +12,12 @@ public class GameManager : MonoBehaviour
 
     private int[] abilityIndex = new int[3];
 
-    private PlayerController playerController;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] Image kickButtonImage;
 
-    private void Awake()
+    private void Update()
     {
-        playerController = GetComponent<PlayerController>();
+        CoolDownIcon();
     }
 
     public void AbilityEnforce()
@@ -85,5 +86,10 @@ public class GameManager : MonoBehaviour
             Abilities[abilityIndex[i]].SetActive(true);
             Abilities[abilityIndex[i]].transform.position = ShowPos[i].transform.position;
         }
+    }
+
+    private void CoolDownIcon()
+    {
+        kickButtonImage.fillAmount = (playerController.curKickCool / playerController.kickDelay);
     }
 }

@@ -584,6 +584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128340615}
   - component: {fileID: 128340614}
+  - component: {fileID: 128340616}
   m_Layer: 0
   m_Name: Tmp_Kick
   m_TagString: Untagged
@@ -631,6 +632,18 @@ Transform:
   m_Father: {fileID: 808542103}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128340616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128340613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f135abf330ba979408463cc3333f22d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &174077835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1138,8 @@ MonoBehaviour:
   - {fileID: 1310713752}
   - {fileID: 606648581}
   - {fileID: 910081794}
+  playerController: {fileID: 808542104}
+  kickButtonImage: {fileID: 652700582}
 --- !u!4 &461464173
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,13 +1688,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &652700583
@@ -2040,6 +2055,7 @@ MonoBehaviour:
   jumpForce: 13
   fireDelay: 3
   kickDelay: 3
+  curKickCool: 3
   maxJumpCount: 2
   hp: 3
   cur_exp: 30
