@@ -703,7 +703,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 13
   maxJumpCount: 2
-  HP: 5
   bulletPrefab: {fileID: 7671622083470114318, guid: 75bca21f765222145842fc53a6959272, type: 3}
 --- !u!1 &817228912
 GameObject:
@@ -806,10 +805,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 5148704161826037839, guid: 3fb9423421820674fa2ab8601b395828, type: 3}
-  Enemy1: {fileID: 6729888154944599735, guid: 1a201f75219259c4bade5f6cf2a353a3, type: 3}
-  Enemy2: {fileID: 6729888154944599735, guid: 48cfb7292b1b9df48a66ad3b529a61f2, type: 3}
+  Enermy: {fileID: 6729888154944599735, guid: 1a201f75219259c4bade5f6cf2a353a3, type: 3}
   Laser: {fileID: 932710914086044894, guid: 2129629580f955d4b93049a2a80c34c8, type: 3}
-  HP: 100
   speed: 0.1
 --- !u!61 &817228916
 BoxCollider2D:
