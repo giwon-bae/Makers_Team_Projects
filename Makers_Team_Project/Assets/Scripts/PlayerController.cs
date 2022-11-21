@@ -5,16 +5,26 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
+    public float fireDelay = 3f;
+    public float kickDelay = 3f;
+    public float curKickCool = 3f;
+    public bool isInvincibility = false;
     public int maxJumpCount = 2;
+    public int cur_exp = 0;
 
-    private float fireDelay = 3f;
     private float curFireCool = 1f;
-    private int jumpCount = 0;
-    private bool isGround = false;
+    private float invincibilityDuration = 1f;
+    private bool isJump = false;
     private bool isDead = false;
     private bool isFireReady = true;
+    private bool isKickReady = true;
+    private int jumpCount = 0;
+    private int req_exp = 10;
+    private int hp = 3;
 
-    [SerializeField]GameObject bulletPrefab;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] BoxCollider2D meleeArea;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private Transform petTransform;
@@ -41,40 +51,100 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Move();
-        Attack();
+        //Move();
+        Timer();
+        RangedAttack();
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("Level Up");
+            LevelUp();
+        }
     }
 
-    private void Move()
+    //private void Move()
+    //{
+    //    if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+    //    {
+    //        jumpCount++;
+    //        playerRigidbody.velocity = Vector2.zero;
+    //        playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
+    //    }
+    //    else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+    //    {
+    //        playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
+    //    }
+
+    //    if (Input.GetMouseButtonDown(1))
+    //    {
+    //        playerCollider.offset = slideColliderOffset;
+    //        playerCollider.size = slideColliderSize;
+    //    }
+    //    else if (Input.GetMouseButtonUp(1))
+    //    {
+    //        playerCollider.offset = ColliderOffset;
+    //        playerCollider.size = ColliderSize;
+    //    }
+    //}
+
+    public void Jump()
     {
-        if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+        if (jumpCount < maxJumpCount)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
-            playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
+            playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
+    }
 
-        if (Input.GetMouseButtonDown(1))
+    public void SlideDown()
+    {
+        if (isJump)
         {
-            playerCollider.offset = slideColliderOffset;
-            playerCollider.size = slideColliderSize;
+            return;
         }
-        else if (Input.GetMouseButtonUp(1))
+        playerCollider.offset = slideColliderOffset;
+        playerCollider.size = slideColliderSize;
+        petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
+    }
+
+    public void SlideUp()
+    {
+        if (isJump)
         {
-            playerCollider.offset = ColliderOffset;
-            playerCollider.size = ColliderSize;
+            return;
+        }
+        playerCollider.offset = ColliderOffset;
+        playerCollider.size = ColliderSize;
+        petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+    }
+
+    public void LevelUp()
+    {
+        if (cur_exp >= req_exp)
+        {
+            cur_exp = cur_exp - req_exp;
+            Time.timeScale = 0;
+            gameManager.AbilityEnforce();
         }
     }
 
-    private void Attack()
+    public void MeleeAttack()
     {
-        curFireCool += Time.deltaTime;
-        isFireReady = curFireCool > fireDelay;
+        if (isKickReady)
+        {
+            StopCoroutine("Kick");
+            StartCoroutine("Kick");
+            curKickCool = 0f;
+        }
+    }
 
+    private void RangedAttack()
+    {
         if (isFireReady)
         {
             Instantiate(bulletPrefab, petTransform.position, petTransform.rotation);
@@ -82,30 +152,74 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Die()
+    private void Timer()
     {
+        curFireCool += Time.deltaTime;
+        isFireReady = curFireCool > fireDelay;
+        curKickCool += Time.deltaTime;
+        isKickReady = curKickCool > kickDelay;
+    }
+
+    public void CheckHit()
+    {
+        StopCoroutine(Hitted());
+        StartCoroutine(Hitted());
+    }
+
+    public void HpController()
+    {
+        gameManager.UpdateHpIcon(hp);
+        if(hp > 0)
+        {
+            return;
+        }
+        Debug.Log("Game Over");
+        gameManager.GameOver();
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
+        //start die animation
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Dead" && !isDead)
         {
-            Die();
+            hp = 0;
+            HpController();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts[0].normal.y > 0.7f){
-            isGround = true;
+            isJump = false;
             jumpCount = 0;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGround = false;
+        isJump = true;
+    }
+
+    IEnumerator Kick()
+    {
+        meleeArea.enabled = true;
+        yield return new WaitForSeconds(0.3f);
+
+        meleeArea.enabled = false;
+    }
+
+    IEnumerator Hitted()
+    {
+        Debug.Log("Start Coroutine");
+        isInvincibility = true;
+        hp -= 1;
+        HpController();
+        //hitted motion
+        yield return new WaitForSeconds(invincibilityDuration);
+
+        Debug.Log("Stop Coroutine");
+        isInvincibility = false;
     }
 }
