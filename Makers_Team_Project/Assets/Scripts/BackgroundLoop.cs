@@ -10,7 +10,8 @@ public class BackgroundLoop : MonoBehaviour
     {
         BoxCollider2D backgroundCollider = GetComponent<BoxCollider2D>();
         //width = backgroundCollider.size.x;
-        width = transform.localScale.x;
+        //width = transform.localScale.x;
+        width = 17.8f;
     }
 
     void Update()
