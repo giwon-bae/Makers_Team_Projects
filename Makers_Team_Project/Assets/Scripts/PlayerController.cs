@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float fireDelay = 3f;
     public float kickDelay = 3f;
     public float curKickCool = 3f;
+    public float invincibilityDuration = 1f;
+    public bool isGigantic = false;
     public bool isInvincibility = false;
     public int maxJumpCount = 2;
     public int cur_exp = 0;
@@ -15,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
 
     private float curFireCool = 1f;
-    private float invincibilityDuration = 1f;
     private bool isJump = false;
     private bool isDead = false;
     private bool isFireReady = true;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] BoxCollider2D meleeArea;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
+    private SpriteRenderer playerSprite;
     private Transform petTransform;
     private Vector2 ColliderOffset;
     private Vector2 ColliderSize;
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<CapsuleCollider2D>();
+        playerSprite = GetComponent<SpriteRenderer>();
         petTransform = this.gameObject.transform.GetChild(0);
 
         ColliderOffset = playerCollider.offset;
@@ -164,8 +167,21 @@ public class PlayerController : MonoBehaviour
 
     public void CheckHit()
     {
-        StopCoroutine(Hitted());
-        StartCoroutine(Hitted());
+        if(!isGigantic)
+        {
+            if (shield.activeSelf == true)
+            {
+                shield.SetActive(false);
+            }
+            else
+            {
+                hp -= 1;
+                HpController();
+                //hitted motion
+            }
+            StopCoroutine(Invincibility());
+            StartCoroutine(Invincibility());
+        }
     }
 
     public void HpController()
@@ -180,6 +196,12 @@ public class PlayerController : MonoBehaviour
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
         //start die animation
+    }
+
+    public void GiganticAbility()
+    {
+        StopCoroutine(Gigantic());
+        StartCoroutine(Gigantic());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -212,26 +234,42 @@ public class PlayerController : MonoBehaviour
         meleeArea.enabled = false;
     }
 
-    IEnumerator Hitted()
+    IEnumerator Invincibility()
     {
         Debug.Log("Start Coroutine");
-
-        if (shield.activeSelf == true)
-        {
-            shield.SetActive(false);
-        }
-        else
-        {
-            hp -= 1;
-            HpController();
-        }
-        
         isInvincibility = true;
-        
-        //hitted motion
-        yield return new WaitForSeconds(invincibilityDuration);
 
-        Debug.Log("Stop Coroutine");
+        for(int i=0; i<invincibilityDuration/1; i++)
+        {
+            playerSprite.color = new Color(0, 0, 0, 0.4f);
+            yield return new WaitForSeconds(0.5f);
+            playerSprite.color = new Color(0, 0, 0, 0.7f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
         isInvincibility = false;
+        playerSprite.color = new Color(0, 0, 0, 1);
+        Debug.Log("Stop Coroutine");
+    }
+
+    IEnumerator Gigantic()
+    {
+        isGigantic = true;
+        gameObject.transform.position = new Vector2(-5.75f, 0f);
+        gameObject.transform.localScale = new Vector2(1.75f, 2f);
+        yield return new WaitForSeconds(0.3f);
+
+        gameObject.transform.position = new Vector2(-6f, 1f);
+        gameObject.transform.localScale = new Vector2(2.5f, 3f);
+        yield return new WaitForSeconds(5f);
+
+        gameObject.transform.localScale = new Vector2(1.75f, 2f);
+        gameObject.transform.position = new Vector2(-5.75f, 0f);
+        yield return new WaitForSeconds(0.3f);
+
+        gameObject.transform.localScale = new Vector2(1f, 1f);
+        gameObject.transform.position = new Vector2(-6.5f, -2.1f);
+        isGigantic = false;
+        yield return Invincibility();
     }
 }

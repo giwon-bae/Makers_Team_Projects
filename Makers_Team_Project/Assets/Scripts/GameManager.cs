@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void AbilityEnforce()
     {
-        Panels[0].SetActive(true);
+        Panels[1].SetActive(true);
         SelectAbility();
         ShowAbility();
     }
@@ -46,13 +46,15 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        Panels[2].SetActive(false);
         SceneManager.LoadScene("Main");
+        Time.timeScale = 1;
     }
 
     public void GameOver()
     {
-        //show gameover UI (message, restart button etc..)
-        //timescale = 0
+        Panels[2].SetActive(true);
+        Time.timeScale = 0;
         //check score
     }
 
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
         {
             Abilities[abilityIndex[i]].SetActive(false);
         }
-        Panels[0].SetActive(false);
+        Panels[1].SetActive(false);
         Debug.Log(index);
 
         switch (index)
@@ -72,6 +74,18 @@ public class GameManager : MonoBehaviour
                 break;
             case 1:
                 playerController.shield.SetActive(true);
+                break;
+            case 2:
+                playerController.fireDelay *= 0.8f;
+                break;
+            case 3:
+                playerController.kickDelay *= 0.8f;
+                break;
+            case 4:
+                playerController.invincibilityDuration += 1f;
+                break;
+            case 5:
+                playerController.GiganticAbility();
                 break;
         }
 
@@ -85,6 +99,11 @@ public class GameManager : MonoBehaviour
         for (int i=0; i<Abilities.Length; i++)
         {
             checkIndex[i] = false;
+        }
+
+        if (playerController.shield.activeSelf)
+        {
+            checkIndex[1] = true;
         }
         
         for(int i=0; i<3; i++)

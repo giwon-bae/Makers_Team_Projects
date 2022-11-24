@@ -15,11 +15,11 @@ D:/GitHub/Makers_Team_Projects/Makers_Team_Project
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-3300
+2683
 Successfully changed project path to: D:/GitHub/Makers_Team_Projects/Makers_Team_Project
 D:/GitHub/Makers_Team_Projects/Makers_Team_Project
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 33.47 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 34.59 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.5f1 (8095aa901b9b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -35,261 +35,19 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56924
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56828
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.006219 seconds.
+Registered in 0.006657 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 33.74 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 36.53 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.927 seconds
+- Completed reload, in  5.716 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000768 seconds.
+Registered in 0.000866 seconds.
 Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 33.58 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.999 seconds
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.35 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1820 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 87.9 MB.
-System memory in use after: 87.8 MB.
-
-Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 2264.
-Total: 1.983100 ms (FindLiveObjects: 0.258200 ms CreateObjectMapping: 0.107000 ms MarkObjects: 1.503800 ms  DeleteObjects: 0.113300 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Prefabs/Tmp_BossBullet.prefab
-  artifactKey: Guid(3fb9423421820674fa2ab8601b395828) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_BossBullet.prefab using Guid(3fb9423421820674fa2ab8601b395828) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9dfcd7719101b2e975ff15184b4c9212') in 0.151923 seconds
-  Import took 0.154770 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000302 seconds.
-  path: Assets/Prefabs/Tmp_Laser.prefab
-  artifactKey: Guid(2129629580f955d4b93049a2a80c34c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_Laser.prefab using Guid(2129629580f955d4b93049a2a80c34c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7032a01587c97a69dcc24d1452b9a0c') in 0.007086 seconds
-  Import took 0.010446 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000211 seconds.
-  path: Assets/Prefabs/Tmp_bullet.prefab
-  artifactKey: Guid(75bca21f765222145842fc53a6959272) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_bullet.prefab using Guid(75bca21f765222145842fc53a6959272) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de8e83824ab4fcfcfaceb02d06fe8eca') in 0.007154 seconds
-  Import took 0.010025 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000180 seconds.
-  path: Assets/Prefabs/Tmp_subEnermy.prefab
-  artifactKey: Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_subEnermy.prefab using Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3899e7b20cf67d2b210c7d00c088751f') in 0.008434 seconds
-  Import took 0.011143 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003349 seconds.
-  path: Assets/Prefabs/Tmp_subEnermy.prefab
-  artifactKey: Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_subEnermy.prefab using Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3899e7b20cf67d2b210c7d00c088751f') in 0.007093 seconds
-  Import took 0.010217 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.000940 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.35 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.921 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.39 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1815 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 90.9 MB.
-System memory in use after: 90.9 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2275.
-Total: 1.965700 ms (FindLiveObjects: 0.208000 ms CreateObjectMapping: 0.060600 ms MarkObjects: 1.578600 ms  DeleteObjects: 0.117100 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 100.207364 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/earth 2.png
-  artifactKey: Guid(29f6989d5755f1b4fbe334d44ebc33a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/earth 2.png using Guid(29f6989d5755f1b4fbe334d44ebc33a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '181a14fb39cabbb66dab93f537d60a12') in 0.075044 seconds
-  Import took 0.077996 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000300 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/earth 3.png
-  artifactKey: Guid(27808588f73e8024d81a4ea7a1ec1157) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/earth 3.png using Guid(27808588f73e8024d81a4ea7a1ec1157) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6338f2b445f5921f02b1a591d4adb88e') in 0.038734 seconds
-  Import took 0.041687 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000233 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/snowman 1.png
-  artifactKey: Guid(284b27c9fe5ead74e97c5df20e66d992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/snowman 1.png using Guid(284b27c9fe5ead74e97c5df20e66d992) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7bb023c5526a45355d61df8293a33c98') in 0.010716 seconds
-  Import took 0.014171 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000184 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/earth 1.png
-  artifactKey: Guid(f7ae4e5931263c54c9cbb010560ebe15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/earth 1.png using Guid(f7ae4e5931263c54c9cbb010560ebe15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3de993e82f0269480390b84a58710b15') in 0.010747 seconds
-  Import took 0.014245 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)
-  artifactKey: Guid(3bbab38b531adc74cad485b4b23e372c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1) using Guid(3bbab38b531adc74cad485b4b23e372c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65488cf20d5d87a7b39d4a030673731b') in 0.002623 seconds
-  Import took 0.005546 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000293 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/background.png
-  artifactKey: Guid(c267d2a67c862c74d868d358b4881252) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/background.png using Guid(c267d2a67c862c74d868d358b4881252) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6dccef69900a76a7cf7be724e1daaa4') in 0.060189 seconds
-  Import took 0.064430 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000191 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/snowman 3.png
-  artifactKey: Guid(e0511a4867fed884face8c201d4a8b4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/snowman 3.png using Guid(e0511a4867fed884face8c201d4a8b4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '131b572cf75eef2864d0c37418c48c76') in 0.028851 seconds
-  Import took 0.031524 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000190 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/mounted platform 2.png
-  artifactKey: Guid(14d3522a2c962d3418afb4712d02f3bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/mounted platform 2.png using Guid(14d3522a2c962d3418afb4712d02f3bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '388116763df2401e810594073cdf6f5b') in 0.023212 seconds
-  Import took 0.026257 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000211 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/earth 4.png
-  artifactKey: Guid(43a0d1d8c3148114faa6cbf0312816cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/earth 4.png using Guid(43a0d1d8c3148114faa6cbf0312816cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b014a6414315419acfea267721be5a4a') in 0.012546 seconds
-  Import took 0.015392 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000213 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/mounted platform 3.png
-  artifactKey: Guid(fe01dd445865ff24eb2831300a094638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/mounted platform 3.png using Guid(fe01dd445865ff24eb2831300a094638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c59f934ffa51d32d763ea607f2074b1e') in 0.009785 seconds
-  Import took 0.012797 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000197 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/mounted platform 1.png
-  artifactKey: Guid(8253f8fe10e9abf419e6b48a98980235) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/mounted platform 1.png using Guid(8253f8fe10e9abf419e6b48a98980235) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3fbe728d13a23a3b619e91d4ba7a32a') in 0.032465 seconds
-  Import took 0.035154 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/mounted platform 4.png
-  artifactKey: Guid(5cab1e3282a81104087ff67c0c23dbb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/mounted platform 4.png using Guid(5cab1e3282a81104087ff67c0c23dbb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a9f5091bf6bb6a54d68d37d418fe7ea') in 0.009493 seconds
-  Import took 0.012131 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000239 seconds.
-  path: Assets/Sprites/2d platformer winter (package 1)/snowman 2.png
-  artifactKey: Guid(2b27d20e9fb8d884daa27ade76fc6e93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Sprites/2d platformer winter (package 1)/snowman 2.png using Guid(2b27d20e9fb8d884daa27ade76fc6e93) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50ce925f7ed35d5ee930f5b47629abd5') in 0.010478 seconds
-  Import took 0.013301 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 245.336789 seconds.
-  path: Assets/Prefabs/Tmp_subEnermy.prefab
-  artifactKey: Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_subEnermy.prefab using Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '659d90eb1209021d3661204bb4834dea') in 0.062218 seconds
-  Import took 0.065771 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.366624 seconds.
-  path: Assets/Prefabs/Tmp_subEnermy.prefab
-  artifactKey: Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tmp_subEnermy.prefab using Guid(1a201f75219259c4bade5f6cf2a353a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d05f0a27abcd44b6cc0d7cb0f73450b') in 0.010217 seconds
-  Import took 0.015453 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007563 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.33 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.927 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.31 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1815 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 91.0 MB.
-System memory in use after: 91.0 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2303.
-Total: 1.835700 ms (FindLiveObjects: 0.215400 ms CreateObjectMapping: 0.066000 ms MarkObjects: 1.461000 ms  DeleteObjects: 0.092000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001000 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.44 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.205 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.37 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1815 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 91.0 MB.
-System memory in use after: 91.0 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 2307.
-Total: 2.214400 ms (FindLiveObjects: 0.272600 ms CreateObjectMapping: 0.078400 ms MarkObjects: 1.716800 ms  DeleteObjects: 0.145300 ms)
-
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
