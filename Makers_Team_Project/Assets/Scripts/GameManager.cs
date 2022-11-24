@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,25 +18,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        CoolDownIcon();
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            CoolDownIcon();
+        }
     }
 
     public void AbilityEnforce()
     {
         Panels[0].SetActive(true);
-        GetAbility();
+        SelectAbility();
         ShowAbility();
-    }
-
-    public void ShowLog(int index)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            Abilities[abilityIndex[i]].SetActive(false);
-        }
-        Panels[0].SetActive(false);
-        Debug.Log(index);
-        Time.timeScale = 1;
     }
 
     public void UpdateHpIcon(int num)
@@ -51,6 +44,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GameStart()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
     public void GameOver()
     {
         //show gameover UI (message, restart button etc..)
@@ -58,7 +56,29 @@ public class GameManager : MonoBehaviour
         //check score
     }
 
-    private void GetAbility()
+    public void ShowLog(int index)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Abilities[abilityIndex[i]].SetActive(false);
+        }
+        Panels[0].SetActive(false);
+        Debug.Log(index);
+
+        switch (index)
+        {
+            case 0:
+
+                break;
+            case 1:
+                playerController.shield.SetActive(true);
+                break;
+        }
+
+        Time.timeScale = 1;
+    }
+
+    private void SelectAbility() //랜덤으로 3개의 능력강화 선택
     {
         bool[] checkIndex = new bool[Abilities.Length];
 
@@ -79,7 +99,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ShowAbility()
+    private void ShowAbility() //선택된 능력강화들 UI에 띄우기
     {
         for(int i=0; i<3; i++)
         {

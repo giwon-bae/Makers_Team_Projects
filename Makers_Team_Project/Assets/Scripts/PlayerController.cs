@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public int maxJumpCount = 2;
     public int cur_exp = 0;
 
+    public GameObject shield;
+
     private float curFireCool = 1f;
     private float invincibilityDuration = 1f;
     private bool isJump = false;
@@ -213,9 +215,19 @@ public class PlayerController : MonoBehaviour
     IEnumerator Hitted()
     {
         Debug.Log("Start Coroutine");
+
+        if (shield.activeSelf == true)
+        {
+            shield.SetActive(false);
+        }
+        else
+        {
+            hp -= 1;
+            HpController();
+        }
+        
         isInvincibility = true;
-        hp -= 1;
-        HpController();
+        
         //hitted motion
         yield return new WaitForSeconds(invincibilityDuration);
 
