@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MosterCtrl : MonoBehaviour
 {
-    public float speed = 10f;
+    //public float speed = 10f;
 
     private Rigidbody2D rigid;
 
@@ -18,8 +18,8 @@ public class MosterCtrl : MonoBehaviour
 
     void FixedUpdate()
     {
-        rigid.velocity = new Vector2(-1, rigid.velocity.y); //단순 왼쪽방향 이동  
-        transform.Translate(new Vector2(-0.03f, 0));
+        //rigid.velocity = new Vector2(-1, rigid.velocity.y); //단순 왼쪽방향 이동  
+        //transform.Translate(new Vector2(-0.03f, 0));
          
         //if (HP <= 0)
         //{
