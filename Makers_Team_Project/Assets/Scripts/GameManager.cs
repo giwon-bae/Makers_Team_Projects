@@ -9,18 +9,34 @@ public class GameManager : MonoBehaviour
     public GameObject[] Panels;
     public GameObject[] Abilities;
     public GameObject[] ShowPos;
+    public GameObject[] Patterns;
     public Image[] HpImages;
+    public Slider ExpBar;
 
     private int[] abilityIndex = new int[3];
+    private Queue<int> platformindices = new Queue<int>();
+    private float platformWidth = 17.8f;
+    private int randomPlatformIdx;
 
     [SerializeField] PlayerController playerController;
     [SerializeField] Image kickButtonImage;
+
+    void Awake()
+    {
+        platformindices.Enqueue(0);
+        SelectPlatform();
+        platformindices.Enqueue(randomPlatformIdx);
+        Patterns[randomPlatformIdx].SetActive(true);
+        Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
+    }
 
     private void Update()
     {
         if (SceneManager.GetActiveScene().name == "Main")
         {
             CoolDownIcon();
+            ShowExpBar();
+            PlatformPositioning();
         }
     }
 
@@ -127,8 +143,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ShowExpBar()
+    {
+        ExpBar.value = (float)playerController.cur_exp / playerController.req_exp;
+    }
+
     private void CoolDownIcon()
     {
         kickButtonImage.fillAmount = (playerController.curKickCool / playerController.kickDelay);
+    }
+
+    private void SelectPlatform()
+    {
+        randomPlatformIdx = Random.Range(1, Patterns.Length);
+
+        while (Patterns[randomPlatformIdx].activeSelf)
+        {
+            randomPlatformIdx = Random.Range(0, Patterns.Length);
+        }
+    }
+
+    private void PlatformPositioning()
+    {
+        if (Patterns[platformindices.Peek()].transform.position.x > -platformWidth)
+        {
+            return;
+        }
+        //Debug.Log(platformindices.Peek());
+        //Debug.Log(Patterns[platformindices.Peek()].transform.position.x);
+
+        SelectPlatform();
+
+        //Activation
+        platformindices.Enqueue(randomPlatformIdx);
+        Patterns[randomPlatformIdx].SetActive(true);
+        Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
+
+        //Disabled
+        for(int i=0; i<Patterns[platformindices.Peek()].transform.childCount; i++)
+        {
+            Patterns[platformindices.Peek()].transform.GetChild(i).gameObject.SetActive(true);
+        }
+        Patterns[platformindices.Dequeue()].SetActive(false);
     }
 }

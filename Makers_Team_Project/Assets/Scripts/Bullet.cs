@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 5f;
 
+    PlayerController playerCtrl;
+
     void Update()
     {
         transform.Translate(Vector3.right * speed * Time.deltaTime);
@@ -17,8 +19,16 @@ public class Bullet : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
+            playerCtrl = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerCtrl.cur_exp += 5;
+            playerCtrl.LevelUp();
+            collision.gameObject.SetActive(false);
             Destroy(gameObject);
+        }
+        else if(collision.tag == "Boss")
+        {
+            Destroy(gameObject);
+            //Boss Hp --;
         }
     }
 }

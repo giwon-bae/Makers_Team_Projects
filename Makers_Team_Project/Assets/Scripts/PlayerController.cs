@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public bool isGigantic = false;
     public bool isInvincibility = false;
     public int maxJumpCount = 2;
+    public int req_exp = 10;
     public int cur_exp = 0;
 
     public GameObject shield;
@@ -22,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private bool isFireReady = true;
     private bool isKickReady = true;
     private int jumpCount = 0;
-    private int req_exp = 10;
     private int hp = 3;
 
     [SerializeField] GameObject bulletPrefab;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        //Move();
+        Move();
         Timer();
         RangedAttack();
 
@@ -67,30 +67,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private void Move()
-    //{
-    //    if(Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
-    //    {
-    //        jumpCount++;
-    //        playerRigidbody.velocity = Vector2.zero;
-    //        playerRigidbody.AddForce(new Vector2(0, jumpForce),ForceMode2D.Impulse);
-    //    }
-    //    else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
-    //    {
-    //        playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
-    //    }
+    private void Move()
+    {
+        if (Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+        {
+            jumpCount++;
+            playerRigidbody.velocity = Vector2.zero;
+            playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        {
+            playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
+        }
 
-    //    if (Input.GetMouseButtonDown(1))
-    //    {
-    //        playerCollider.offset = slideColliderOffset;
-    //        playerCollider.size = slideColliderSize;
-    //    }
-    //    else if (Input.GetMouseButtonUp(1))
-    //    {
-    //        playerCollider.offset = ColliderOffset;
-    //        playerCollider.size = ColliderSize;
-    //    }
-    //}
+        if (Input.GetMouseButtonDown(1))
+        {
+            playerCollider.offset = slideColliderOffset;
+            playerCollider.size = slideColliderSize;
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            playerCollider.offset = ColliderOffset;
+            playerCollider.size = ColliderSize;
+        }
+    }
 
     public void Jump()
     {
@@ -133,6 +133,7 @@ public class PlayerController : MonoBehaviour
         if (cur_exp >= req_exp)
         {
             cur_exp = cur_exp - req_exp;
+            req_exp += 10;
             Time.timeScale = 0;
             gameManager.AbilityEnforce();
         }
