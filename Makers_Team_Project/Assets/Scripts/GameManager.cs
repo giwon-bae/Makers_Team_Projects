@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private int[] abilityIndex = new int[3];
     private Queue<int> platformindices = new Queue<int>();
-    private float platformWidth = 17.8f;
+    private float platformWidth = 17.7f;
     private int randomPlatformIdx;
 
     [SerializeField] PlayerController playerController;

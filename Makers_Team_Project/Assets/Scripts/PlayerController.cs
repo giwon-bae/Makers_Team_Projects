@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameManager gameManager;
-    [SerializeField] BoxCollider2D meleeArea;
+    [SerializeField] GameObject meleeArea;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private SpriteRenderer playerSprite;
@@ -89,6 +89,11 @@ public class PlayerController : MonoBehaviour
         {
             playerCollider.offset = ColliderOffset;
             playerCollider.size = ColliderSize;
+        }
+
+        if (Input.GetKey(KeyCode.K))
+        {
+            MeleeAttack();
         }
     }
 
@@ -229,10 +234,10 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Kick()
     {
-        meleeArea.enabled = true;
+        meleeArea.SetActive(true);
         yield return new WaitForSeconds(0.3f);
 
-        meleeArea.enabled = false;
+        meleeArea.SetActive(false);
     }
 
     IEnumerator Invincibility()
