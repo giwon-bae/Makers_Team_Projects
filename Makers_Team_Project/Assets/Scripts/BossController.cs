@@ -7,7 +7,10 @@ public class BossController : MonoBehaviour
     [SerializeField] GameObject Bullet;
     [SerializeField] GameObject Enermy;
     [SerializeField] GameObject Laser;
+    [SerializeField] int HP;
     Rigidbody2D rigid;
+
+    private int random;
     public float speed = 0.1f;
     private float LaserDelay = 15f;
     private float curLaserCool = 1f;
@@ -28,19 +31,38 @@ public class BossController : MonoBehaviour
         BulletTransform = this.gameObject.transform.GetChild(0);
         EnermyTransform = this.gameObject.transform.GetChild(1);
         LaserTransform = this.gameObject.transform.GetChild(2);
+        HP = 100;
+        random = Random.Range(0, 3);
 
     }
 
     void Update()
     {
-        shootLaser();
-        Attack();
-        shootEnermy();
+
+        if(random == 0)
+        {
+            shootEnermy();
+        }
+
+        else if (random == 1)
+        {
+            shootLaser();
+        }
+
+        else if(random == 2)
+        {
+            Attack();
+        }
 
         if(isLaserReady)
         {
             Destroy(GameObject.Find("Tmp_subEnermy(Clone)"));
             Destroy(GameObject.Find("Tmp_BossBullet(Clone)"));
+        }
+
+        if(HP <= 0)
+        {
+            Destroy(gameObject);
         }
     }
     private void Attack()
@@ -58,8 +80,6 @@ public class BossController : MonoBehaviour
             Instantiate(Bullet, BulletTransform.position, BulletTransform.rotation);
             curFireCool = 0f;
         }
-
-
 
 
     }
@@ -101,5 +121,13 @@ public class BossController : MonoBehaviour
         }
         
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "PlayerBullet")
+        {
+            HP -= 1;
+        }
+    }
+
 }

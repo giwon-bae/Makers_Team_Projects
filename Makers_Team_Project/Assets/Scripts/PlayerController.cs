@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool isFireReady = true;
 
     [SerializeField]GameObject bulletPrefab;
+    [SerializeField] int HP;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private Transform petTransform;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 ColliderSize;
     private Vector2 slideColliderOffset;
     private Vector2 slideColliderSize;
+ 
 
     void Start()
     {
@@ -94,6 +96,12 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        if(collision.gameObject.tag == "BossAttack")
+        {
+            HP -= 1;
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
