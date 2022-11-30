@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        //time to invincibility - TODO
         Time.timeScale = 1;
     }
 

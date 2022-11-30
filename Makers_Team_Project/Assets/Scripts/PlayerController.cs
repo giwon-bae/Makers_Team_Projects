@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public int cur_exp = 0;
 
     public GameObject shield;
+    public Animator animator;
 
     private float curFireCool = 1f;
     private bool isJump = false;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         ColliderOffset = playerCollider.offset;
         ColliderSize = playerCollider.size;
-        slideColliderOffset = new Vector2(playerCollider.offset.x, playerCollider.offset.y * 5f);
+        slideColliderOffset = new Vector2(playerCollider.offset.x, playerCollider.offset.y * 10f);
         slideColliderSize = new Vector2(playerCollider.size.x, playerCollider.size.y / 2f);
     }
 
@@ -74,21 +75,26 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            animator.SetTrigger("DoJump");
         }
         else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&&!isJump&&!isGigantic)
         {
             playerCollider.offset = slideColliderOffset;
             playerCollider.size = slideColliderSize;
+            petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
+            animator.SetBool("IsSlide", true);
         }
-        else if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && !isGigantic)
         {
             playerCollider.offset = ColliderOffset;
             playerCollider.size = ColliderSize;
+            petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+            animator.SetBool("IsSlide", false);
         }
 
         if (Input.GetKey(KeyCode.K))
@@ -104,6 +110,7 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            animator.SetTrigger("DoJump");
         }
         else if (playerRigidbody.velocity.y > 0)
         {
@@ -113,24 +120,26 @@ public class PlayerController : MonoBehaviour
 
     public void SlideDown()
     {
-        if (isJump)
+        if (isJump || isGigantic)
         {
             return;
         }
         playerCollider.offset = slideColliderOffset;
         playerCollider.size = slideColliderSize;
         petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
+        animator.SetBool("IsSlide", true);
     }
 
     public void SlideUp()
     {
-        if (isJump)
+        if (isJump || isGigantic)
         {
             return;
         }
         playerCollider.offset = ColliderOffset;
         playerCollider.size = ColliderSize;
         petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+        animator.SetBool("IsSlide", false);
     }
 
     public void LevelUp()
@@ -182,6 +191,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 hp -= 1;
+                animator.SetTrigger("Hitted");
                 HpController();
                 //hitted motion
             }
@@ -247,34 +257,34 @@ public class PlayerController : MonoBehaviour
 
         for(int i=0; i<invincibilityDuration/1; i++)
         {
-            playerSprite.color = new Color(0, 0, 0, 0.4f);
+            playerSprite.color = new Color(255, 255, 255, 0.4f);
             yield return new WaitForSeconds(0.5f);
-            playerSprite.color = new Color(0, 0, 0, 0.7f);
+            playerSprite.color = new Color(255, 255, 255, 0.7f);
             yield return new WaitForSeconds(0.5f);
         }
 
         isInvincibility = false;
-        playerSprite.color = new Color(0, 0, 0, 1);
+        playerSprite.color = new Color(255, 255, 255, 1);
         Debug.Log("Stop Coroutine");
     }
 
     IEnumerator Gigantic()
     {
         isGigantic = true;
-        gameObject.transform.position = new Vector2(-5.75f, 0f);
-        gameObject.transform.localScale = new Vector2(1.75f, 2f);
+        gameObject.transform.position = new Vector2(-5f, -1.1f);
+        gameObject.transform.localScale = new Vector2(1f, 1f);
         yield return new WaitForSeconds(0.3f);
 
-        gameObject.transform.position = new Vector2(-6f, 1f);
-        gameObject.transform.localScale = new Vector2(2.5f, 3f);
+        gameObject.transform.position = new Vector2(-3.5f, 0.3f);
+        gameObject.transform.localScale = new Vector2(1.8f, 1.8f);
         yield return new WaitForSeconds(5f);
 
-        gameObject.transform.localScale = new Vector2(1.75f, 2f);
-        gameObject.transform.position = new Vector2(-5.75f, 0f);
+        gameObject.transform.localScale = new Vector2(1f, 1f);
+        gameObject.transform.position = new Vector2(-5f, -1.1f);
         yield return new WaitForSeconds(0.3f);
 
-        gameObject.transform.localScale = new Vector2(1f, 1f);
-        gameObject.transform.position = new Vector2(-6.5f, -2.1f);
+        gameObject.transform.localScale = new Vector2(0.5f, 0.5f);
+        gameObject.transform.position = new Vector2(-6.5f, -2.2f);
         isGigantic = false;
         yield return Invincibility();
     }
