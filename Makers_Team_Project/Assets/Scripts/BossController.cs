@@ -4,55 +4,45 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    [SerializeField] GameObject Bullet;
-    [SerializeField] GameObject Enermy;
+    public Animator bossAnimator;
+
+    public float speed = 0.1f;
+
+    [SerializeField] Transform BossPos;
+    [SerializeField] GameObject[] SnowBalls;
+    [SerializeField] GameObject[] Enemies;
     [SerializeField] GameObject Laser;
+    [SerializeField] Transform SnowBallTransform;
+    [SerializeField] Transform[] EnemyTransform;
+    [SerializeField] Transform LaserTransform;
     [SerializeField] int HP;
     Rigidbody2D rigid;
 
-    private int random;
-    public float speed = 0.1f;
+    private float attackDelay = 1f;
+    private float curCool = 0f;
+    private bool isAttackReady = false;
+
     private float LaserDelay = 15f;
     private float curLaserCool = 1f;
-    private bool isLaserReady = true;
     private float shootDelay = 9f;
     private float curShootCool = 1f;
-    private bool isShootReady = true;
     private float fireDelay = 5f;
     private float curFireCool = 1f;
     private bool isFireReady = true;
-    private Transform BulletTransform;
-    private Transform EnermyTransform;
-    private Transform LaserTransform;
+    private bool isLaserReady = true;
+    private bool isShootReady = true;
+    private int randomIdx;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        BulletTransform = this.gameObject.transform.GetChild(0);
-        EnermyTransform = this.gameObject.transform.GetChild(1);
-        LaserTransform = this.gameObject.transform.GetChild(2);
         HP = 100;
-        random = Random.Range(0, 3);
-
     }
 
     void Update()
     {
-
-        if (random == 0)
-        {
-            shootEnermy();
-        }
-
-        else if (random == 1)
-        {
-            shootLaser();
-        }
-
-        else if (random == 2)
-        {
-            Attack();
-        }
+        Move();
+        SelectAttack();
 
         if (isLaserReady)
         {
@@ -62,45 +52,107 @@ public class BossController : MonoBehaviour
 
         if (HP <= 0)
         {
-            Destroy(gameObject);
+            //Game Clear
+            Debug.Log("Game Clear!");
+            bossAnimator.SetBool("IsDead", true);
+            //Use Coroutine - TODO
+            //Time.timeScale = 0;
+            //Destroy(gameObject);
         }
     }
+
+    private void Move()
+    {
+        if (transform.position == BossPos.position)
+        {
+            bossAnimator.SetBool("IsBossPos", true);
+            return;
+        }
+        transform.position = Vector2.MoveTowards(transform.position, BossPos.position, Time.deltaTime * 2f);
+    }
+
+    private void SelectAttack()
+    {
+        if (transform.position != BossPos.position)
+        {
+            return;
+        }
+
+        curCool += Time.deltaTime;
+        isAttackReady = curCool > attackDelay;
+
+        if (!isAttackReady)
+        {
+            return;
+        }
+
+        bossAnimator.SetTrigger("DoAttack");
+        randomIdx = Random.Range(0, 3);
+        switch (randomIdx)
+        {
+            case 0:
+                shootEnemy();
+                //change attackDelay - TODO
+                break;
+            case 1:
+                //shootLaser();
+                Attack();
+                //change attackDelay - TODO
+                break;
+            case 2:
+                Attack();
+                //change attackDelay - TODO
+                break;
+        }
+
+        curCool = 0f;
+    }
+
     private void Attack()
     {
-        curFireCool += Time.deltaTime;
-        isFireReady = curFireCool > fireDelay;
+        //curFireCool += Time.deltaTime;
+        //isFireReady = curFireCool > fireDelay;
 
-        if (isLaserReady)
+        //if (isLaserReady)
+        //{
+        //    curFireCool = 0f;
+        //}
+
+        //if (isFireReady)
+        //{
+        //    Instantiate(Bullet, BulletTransform.position, BulletTransform.rotation);
+        //    curFireCool = 0f;
+        //}
+
+        int numberOfSnowBall = Random.Range(0, 3);
+
+        for(int i=0; i<=numberOfSnowBall; i++)
         {
-            curFireCool = 0f;
+            int typeOfSnowBall = Random.Range(0, SnowBalls.Length);
+            Vector2 PosOfSnowBall = new Vector2(SnowBallTransform.position.x, SnowBallTransform.position.y - Random.Range(-1f, 1f));
+            Instantiate(SnowBalls[typeOfSnowBall], PosOfSnowBall, SnowBallTransform.rotation);
         }
-
-        if (isFireReady)
-        {
-            Instantiate(Bullet, BulletTransform.position, BulletTransform.rotation);
-            curFireCool = 0f;
-        }
-
-
     }
 
-    private void shootEnermy()
+    private void shootEnemy()
     {
-        curShootCool += Time.deltaTime;
-        isShootReady = curShootCool > shootDelay;
+        //curShootCool += Time.deltaTime;
+        //isShootReady = curShootCool > shootDelay;
 
 
-        if (isLaserReady)
-        {
-            curShootCool = 0f;
-        }
+        //if (isLaserReady)
+        //{
+        //    curShootCool = 0f;
+        //}
 
-        if (isShootReady)
-        {
-            Instantiate(Enermy, EnermyTransform.position, EnermyTransform.rotation);
-            curShootCool = 0f;
-        }
+        //if (isShootReady)
+        //{
+        //    //Instantiate(Enermy, EnermyTransform.position, EnermyTransform.rotation);
+        //    curShootCool = 0f;
+        //}
 
+        int typeOfEnemy = Random.Range(0, Enemies.Length);
+        Instantiate(Enemies[typeOfEnemy], EnemyTransform[typeOfEnemy].position, EnemyTransform[typeOfEnemy].rotation);
     }
 
     private void shootLaser()
@@ -129,5 +181,4 @@ public class BossController : MonoBehaviour
             HP -= 1;
         }
     }
-
 }

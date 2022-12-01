@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private Queue<int> platformindices = new Queue<int>();
     private float platformWidth = 17.7f;
     private int randomPlatformIdx;
+    private int mapCount = 0;
+    private int summonBossTime = 20;
 
     [SerializeField] PlayerController playerController;
     [SerializeField] Image kickButtonImage;
@@ -38,13 +40,6 @@ public class GameManager : MonoBehaviour
             ShowExpBar();
             PlatformPositioning();
         }
-    }
-
-    public void AbilityEnforce()
-    {
-        Panels[1].SetActive(true);
-        SelectAbility();
-        ShowAbility();
     }
 
     public void UpdateHpIcon(int num)
@@ -74,7 +69,7 @@ public class GameManager : MonoBehaviour
         //check score
     }
 
-    public void ShowLog(int index)
+    public void GetAbility(int index) // 능력 획득
     {
         for (int i = 0; i < 3; i++)
         {
@@ -101,15 +96,29 @@ public class GameManager : MonoBehaviour
                 playerController.invincibilityDuration += 1f;
                 break;
             case 5:
-                playerController.GiganticAbility();
+                //playerController.GiganticAbility();
+                playerController.StopCoroutine("Gigantic");
+                playerController.StartCoroutine("Gigantic");
                 break;
         }
 
-        //time to invincibility - TODO
+        if(index != 5)
+        {
+            playerController.StopCoroutine("Invincibility");
+            playerController.StartCoroutine("Invincibility");
+        }
+        
         Time.timeScale = 1;
     }
 
-    private void SelectAbility() //랜덤으로 3개의 능력강화 선택
+    public void AbilityEnforce() // 능력 강화 함수 실행
+    {
+        Panels[1].SetActive(true);
+        SelectAbility();
+        ShowAbility();
+    }
+
+    private void SelectAbility() // 랜덤으로 3개의 능력강화 선택
     {
         bool[] checkIndex = new bool[Abilities.Length];
 
@@ -135,7 +144,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ShowAbility() //선택된 능력강화들 UI에 띄우기
+    private void ShowAbility() // 선택된 능력강화 버튼 UI에 띄우기
     {
         for(int i=0; i<3; i++)
         {
@@ -156,6 +165,11 @@ public class GameManager : MonoBehaviour
 
     private void SelectPlatform()
     {
+        if (mapCount > summonBossTime)
+        {
+            randomPlatformIdx = 0;
+            return;
+        }
         randomPlatformIdx = Random.Range(1, Patterns.Length);
 
         while (Patterns[randomPlatformIdx].activeSelf)
@@ -170,8 +184,6 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        //Debug.Log(platformindices.Peek());
-        //Debug.Log(Patterns[platformindices.Peek()].transform.position.x);
 
         SelectPlatform();
 
@@ -186,5 +198,7 @@ public class GameManager : MonoBehaviour
             Patterns[platformindices.Peek()].transform.GetChild(i).gameObject.SetActive(true);
         }
         Patterns[platformindices.Dequeue()].SetActive(false);
+
+        mapCount++;
     }
 }

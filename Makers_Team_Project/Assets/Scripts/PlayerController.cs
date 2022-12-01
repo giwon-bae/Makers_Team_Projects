@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameManager gameManager;
     [SerializeField] GameObject meleeArea;
+    [SerializeField] GameObject invincibilityPlatform;
     private Rigidbody2D playerRigidbody;
     private CapsuleCollider2D playerCollider;
     private SpriteRenderer playerSprite;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Move() // Tmp Controller
     {
         if (Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
         {
@@ -214,12 +215,6 @@ public class PlayerController : MonoBehaviour
         //start die animation
     }
 
-    public void GiganticAbility()
-    {
-        StopCoroutine(Gigantic());
-        StartCoroutine(Gigantic());
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Dead" && !isDead)
@@ -254,8 +249,9 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Start Coroutine");
         isInvincibility = true;
+        invincibilityPlatform.SetActive(true);
 
-        for(int i=0; i<invincibilityDuration/1; i++)
+        for (int i=0; i<invincibilityDuration/1; i++)
         {
             playerSprite.color = new Color(255, 255, 255, 0.4f);
             yield return new WaitForSeconds(0.5f);
@@ -264,6 +260,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isInvincibility = false;
+        invincibilityPlatform.SetActive(false);
         playerSprite.color = new Color(255, 255, 255, 1);
         Debug.Log("Stop Coroutine");
     }
@@ -279,6 +276,7 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.localScale = new Vector2(1.8f, 1.8f);
         yield return new WaitForSeconds(5f);
 
+        invincibilityPlatform.SetActive(true);
         gameObject.transform.localScale = new Vector2(1f, 1f);
         gameObject.transform.position = new Vector2(-5f, -1.1f);
         yield return new WaitForSeconds(0.3f);
