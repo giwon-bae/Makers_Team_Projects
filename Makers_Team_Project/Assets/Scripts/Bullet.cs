@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 5f;
-    public int damage = 3;
+    public int damage = 2;
 
     public GameObject effectPrefab;
 
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         if(collision.tag == "Enemy")
         {
             playerCtrl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            playerCtrl.cur_exp += 5;
+            playerCtrl.cur_exp += collision.GetComponent<MonsterCtrl>().dropExp;
             playerCtrl.LevelUp();
             collision.gameObject.SetActive(false);
             Destroy(gameObject);

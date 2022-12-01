@@ -24,13 +24,13 @@ public class BossController : MonoBehaviour
 
     private float LaserDelay = 15f;
     private float curLaserCool = 1f;
-    private float shootDelay = 9f;
-    private float curShootCool = 1f;
-    private float fireDelay = 5f;
-    private float curFireCool = 1f;
-    private bool isFireReady = true;
+    //private float shootDelay = 9f;
+    //private float curShootCool = 1f;
+    //private float fireDelay = 5f;
+    //private float curFireCool = 1f;
+    //private bool isFireReady = true;
     private bool isLaserReady = true;
-    private bool isShootReady = true;
+    //private bool isShootReady = true;
     private int randomIdx;
 
     void Start()
@@ -165,8 +165,8 @@ public class BossController : MonoBehaviour
             Instantiate(Laser, LaserTransform.position, LaserTransform.rotation);
             Destroy(GameObject.Find("Tmp_subEnermy(Clone)"));
 
-            isShootReady = false;
-            isFireReady = false;
+            //isShootReady = false;
+            //isFireReady = false;
             Destroy(GameObject.Find("Tmp_subEnermy(Clone)"));
             Destroy(GameObject.Find("Tmp_Laser(Clone)"), 3f);
             curLaserCool = 0f;

@@ -6,19 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public float playTime;
+
     public GameObject[] Panels;
     public GameObject[] Abilities;
     public GameObject[] ShowPos;
     public GameObject[] Patterns;
     public Image[] HpImages;
     public Slider ExpBar;
+    public Bullet bullet;
+    public Text timeTxt;
 
     private Queue<int> platformindices = new Queue<int>();
     private float platformWidth = 17.7f;
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 30;
+    private int summonBossTime = 24;// 24 - TODO
 
     [SerializeField] PlayerController playerController;
     [SerializeField] GameObject Boss;
@@ -41,11 +45,20 @@ public class GameManager : MonoBehaviour
             ShowExpBar();
             PlatformPositioning();
 
-            if (mapCount > summonBossTime)
+            if (mapCount > summonBossTime + 1)
             {
                 Boss.SetActive(true);
             }
+
+            playTime += Time.deltaTime;
         }
+    }
+
+    private void LateUpdate()
+    {
+        int min = (int)(playTime / 60);
+        int sec = (int)(playTime % 60);
+        timeTxt.text = string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
     }
 
     public void UpdateHpIcon(int num)
@@ -87,7 +100,7 @@ public class GameManager : MonoBehaviour
         switch (index)
         {
             case 0:
-
+                bullet.damage += 1;
                 break;
             case 1:
                 playerController.shield.SetActive(true);
@@ -102,7 +115,6 @@ public class GameManager : MonoBehaviour
                 playerController.invincibilityDuration += 1f;
                 break;
             case 5:
-                //playerController.GiganticAbility();
                 playerController.StopCoroutine("Gigantic");
                 playerController.StartCoroutine("Gigantic");
                 break;
@@ -133,9 +145,14 @@ public class GameManager : MonoBehaviour
             checkIndex[i] = false;
         }
 
+        //¿¹¿Ü
         if (playerController.shield.activeSelf)
         {
             checkIndex[1] = true;
+        }
+        if (bullet.damage == 5)
+        {
+            checkIndex[0] = true;
         }
         
         for(int i=0; i<3; i++)
