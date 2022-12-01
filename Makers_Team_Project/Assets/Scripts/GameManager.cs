@@ -13,14 +13,15 @@ public class GameManager : MonoBehaviour
     public Image[] HpImages;
     public Slider ExpBar;
 
-    private int[] abilityIndex = new int[3];
     private Queue<int> platformindices = new Queue<int>();
     private float platformWidth = 17.7f;
+    private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
-    private int mapCount = 0;
-    private int summonBossTime = 20;
+    private int mapCount = 2;
+    private int summonBossTime = 30;
 
     [SerializeField] PlayerController playerController;
+    [SerializeField] GameObject Boss;
     [SerializeField] Image kickButtonImage;
 
     void Awake()
@@ -39,6 +40,11 @@ public class GameManager : MonoBehaviour
             CoolDownIcon();
             ShowExpBar();
             PlatformPositioning();
+
+            if (mapCount > summonBossTime)
+            {
+                Boss.SetActive(true);
+            }
         }
     }
 
@@ -167,14 +173,19 @@ public class GameManager : MonoBehaviour
     {
         if (mapCount > summonBossTime)
         {
-            randomPlatformIdx = 0;
+            randomPlatformIdx = Random.Range(1, 4);
+
+            while (Patterns[randomPlatformIdx].activeSelf)
+            {
+                randomPlatformIdx = Random.Range(1, 4);
+            }
             return;
         }
-        randomPlatformIdx = Random.Range(1, Patterns.Length);
+        randomPlatformIdx = Random.Range(4, Patterns.Length);
 
         while (Patterns[randomPlatformIdx].activeSelf)
         {
-            randomPlatformIdx = Random.Range(0, Patterns.Length);
+            randomPlatformIdx = Random.Range(4, Patterns.Length);
         }
     }
 
@@ -199,6 +210,8 @@ public class GameManager : MonoBehaviour
         }
         Patterns[platformindices.Dequeue()].SetActive(false);
 
+        
         mapCount++;
+        Debug.Log(mapCount);
     }
 }

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private float curFireCool = 1f;
     private bool isJump = false;
+    private bool isSlide = false;
     private bool isDead = false;
     private bool isFireReady = true;
     private bool isKickReady = true;
@@ -83,15 +84,17 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
 
-        if (Input.GetMouseButtonDown(1)&&!isJump&&!isGigantic)
+        if (Input.GetMouseButton(1)&&!isJump&&!isGigantic&&!isSlide)
         {
+            isSlide = true;
             playerCollider.offset = slideColliderOffset;
             playerCollider.size = slideColliderSize;
             petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
             animator.SetBool("IsSlide", true);
         }
-        if (Input.GetMouseButtonUp(1) && !isGigantic)
+        if (Input.GetMouseButtonUp(1)&& !isGigantic && isSlide)
         {
+            isSlide = false;
             playerCollider.offset = ColliderOffset;
             playerCollider.size = ColliderSize;
             petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
@@ -125,6 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        isSlide = true;
         playerCollider.offset = slideColliderOffset;
         playerCollider.size = slideColliderSize;
         petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
@@ -133,10 +137,11 @@ public class PlayerController : MonoBehaviour
 
     public void SlideUp()
     {
-        if (isJump || isGigantic)
+        if (isJump || isGigantic || !isSlide)
         {
             return;
         }
+        isSlide = false;
         playerCollider.offset = ColliderOffset;
         playerCollider.size = ColliderSize;
         petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);

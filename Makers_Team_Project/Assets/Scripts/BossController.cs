@@ -7,6 +7,7 @@ public class BossController : MonoBehaviour
     public Animator bossAnimator;
 
     public float speed = 0.1f;
+    public int HP;
 
     [SerializeField] Transform BossPos;
     [SerializeField] GameObject[] SnowBalls;
@@ -15,7 +16,6 @@ public class BossController : MonoBehaviour
     [SerializeField] Transform SnowBallTransform;
     [SerializeField] Transform[] EnemyTransform;
     [SerializeField] Transform LaserTransform;
-    [SerializeField] int HP;
     Rigidbody2D rigid;
 
     private float attackDelay = 1f;
