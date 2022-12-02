@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 123256131}
   - component: {fileID: 7152935625504344332}
   - component: {fileID: -6225321788051014171}
+  - component: {fileID: 5499974986437667153}
   m_Layer: 0
   m_Name: BossEnemy(Range 2)
   m_TagString: Enemy
@@ -169,3 +170,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
+--- !u!114 &5499974986437667153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6729888154944599735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25906ca10964f0845b5206e349fc0cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

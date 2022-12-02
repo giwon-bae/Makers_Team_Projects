@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Patterns;
     public Image[] HpImages;
     public Slider ExpBar;
+    public RectTransform DistanceBar;
     public Bullet bullet;
     public Text timeTxt;
 
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 24;// 24 - TODO
+    private int summonBossTime = 5;// 24 - TODO
 
     [SerializeField] PlayerController playerController;
     [SerializeField] GameObject Boss;
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         platformindices.Enqueue(randomPlatformIdx);
         Patterns[randomPlatformIdx].SetActive(true);
         Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
+        bullet.damage = 2;
     }
 
     private void Update()
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Main")
         {
             CoolDownIcon();
-            ShowExpBar();
+            ShowBar();
             PlatformPositioning();
 
             if (mapCount > summonBossTime + 1)
@@ -176,9 +178,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ShowExpBar()
+    private void ShowBar()
     {
         ExpBar.value = (float)playerController.cur_exp / playerController.req_exp;
+        DistanceBar.sizeDelta = new Vector2((float)(mapCount - 2) / summonBossTime * 600f, DistanceBar.sizeDelta.y);
     }
 
     private void CoolDownIcon()
@@ -227,8 +230,10 @@ public class GameManager : MonoBehaviour
         }
         Patterns[platformindices.Dequeue()].SetActive(false);
 
-        
-        mapCount++;
+        if(mapCount-2 < summonBossTime)
+        {
+            mapCount++;
+        }
         Debug.Log(mapCount);
     }
 }
