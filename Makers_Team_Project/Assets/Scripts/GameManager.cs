@@ -13,30 +13,34 @@ public class GameManager : MonoBehaviour
     public GameObject[] ShowPos;
     public GameObject[] Patterns;
     public Image[] HpImages;
-    public Slider ExpBar;
+    public Text[] timeTxt;
+    public AudioClip[] audioClips;
+    public RectTransform ExpBar;
     public RectTransform DistanceBar;
+    public AudioSource audioSource;
     public Bullet bullet;
-    public Text timeTxt;
 
     private Queue<int> platformindices = new Queue<int>();
     private float platformWidth = 17.7f;
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 5;// 24 - TODO
+    private int summonBossTime = 24;
 
     [SerializeField] PlayerController playerController;
+    [SerializeField] Animator playerAnimator;
     [SerializeField] GameObject Boss;
     [SerializeField] Image kickButtonImage;
 
     void Awake()
     {
-        platformindices.Enqueue(0);
-        SelectPlatform();
-        platformindices.Enqueue(randomPlatformIdx);
-        Patterns[randomPlatformIdx].SetActive(true);
-        Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
-        bullet.damage = 2;
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            GameStart();
+            audioSource.clip = audioClips[0];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 
     private void Update()
@@ -58,9 +62,12 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        int min = (int)(playTime / 60);
-        int sec = (int)(playTime % 60);
-        timeTxt.text = string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            int min = (int)(playTime / 60);
+            int sec = (int)(playTime % 60);
+            timeTxt[0].text = string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
+        }
     }
 
     public void UpdateHpIcon(int num)
@@ -76,10 +83,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GoToTitleScene()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    public void GoToMainScene()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
     public void GameStart()
     {
-        Panels[2].SetActive(false);
-        SceneManager.LoadScene("Main");
+        Panels[0].SetActive(true);
+        for(int i=1; i<Panels.Length; i++)
+        {
+            Panels[i].SetActive(false);
+        }
+
+        platformindices.Enqueue(0);
+        SelectPlatform();
+        platformindices.Enqueue(randomPlatformIdx);
+        Patterns[randomPlatformIdx].SetActive(true);
+        Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
+        bullet.damage = 2;
+
         Time.timeScale = 1;
     }
 
@@ -87,7 +115,35 @@ public class GameManager : MonoBehaviour
     {
         Panels[2].SetActive(true);
         Time.timeScale = 0;
-        //check score
+    }
+
+    public void GameClear()
+    {
+        Panels[3].SetActive(true);
+        //playerAnimator.SetBool("IsBossDead", true);
+        Time.timeScale = 0;
+        int min = (int)(playTime / 60);
+        int sec = (int)(playTime % 60);
+        timeTxt[1].text = "현재 기록 " + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
+
+        float HighRecord = PlayerPrefs.GetFloat("High Record");
+        if(HighRecord == default)
+        {
+            HighRecord = 60 * 99;
+        }
+
+        if(playTime < HighRecord)
+        {
+            timeTxt[2].text = "최고 기록 " + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", sec);
+            PlayerPrefs.SetFloat("High Record", playTime);
+        }
+        else
+        {
+            int h_min = (int)(HighRecord / 60);
+            int h_sec = (int)(HighRecord % 60);
+            timeTxt[2].text = "최고 기록 " + string.Format("{0:00}", h_min) + ":" + string.Format("{0:00}", h_sec);
+        }
+        
     }
 
     public void GetAbility(int index) // 능력 획득
@@ -97,7 +153,6 @@ public class GameManager : MonoBehaviour
             Abilities[abilityIndex[i]].SetActive(false);
         }
         Panels[1].SetActive(false);
-        Debug.Log(index);
 
         switch (index)
         {
@@ -180,7 +235,12 @@ public class GameManager : MonoBehaviour
 
     private void ShowBar()
     {
-        ExpBar.value = (float)playerController.cur_exp / playerController.req_exp;
+        float expBarLength = (float)playerController.cur_exp / playerController.req_exp * 600f;
+        if(expBarLength > 600f)
+        {
+            expBarLength = 600f;
+        }
+        ExpBar.sizeDelta = new Vector2(expBarLength, ExpBar.sizeDelta.y);
         DistanceBar.sizeDelta = new Vector2((float)(mapCount - 2) / summonBossTime * 600f, DistanceBar.sizeDelta.y);
     }
 
@@ -234,6 +294,5 @@ public class GameManager : MonoBehaviour
         {
             mapCount++;
         }
-        Debug.Log(mapCount);
     }
 }

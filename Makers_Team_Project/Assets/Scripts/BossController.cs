@@ -7,8 +7,10 @@ public class BossController : MonoBehaviour
     public Animator bossAnimator;
 
     public float speed = 0.1f;
+    public bool isDead = false;
     public int HP;
 
+    [SerializeField] GameManager gameManager;
     [SerializeField] Transform BossPos;
     [SerializeField] GameObject[] SnowBalls;
     [SerializeField] GameObject[] Enemies;
@@ -41,6 +43,11 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         Move();
         SelectAttack();
 
@@ -53,12 +60,18 @@ public class BossController : MonoBehaviour
         if (HP <= 0)
         {
             //Game Clear
-            Debug.Log("Game Clear!");
+            isDead = true;
             bossAnimator.SetBool("IsDead", true);
-            //Use Coroutine - TODO
-            //Time.timeScale = 0;
+            //gameManager.GameClear();
+            Invoke("GameClear", 1f);
             //Destroy(gameObject);
         }
+    }
+
+    private void GameClear()
+    {
+        Debug.Log("GameClear!");
+        gameManager.GameClear();
     }
 
     private void Move()

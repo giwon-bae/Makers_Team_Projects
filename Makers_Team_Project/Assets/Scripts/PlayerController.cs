@@ -59,15 +59,15 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Move();
+        //Move();
         Timer();
         RangedAttack();
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Debug.Log("Level Up");
-            LevelUp();
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    Debug.Log("Level Up");
+        //    LevelUp();
+        //}
     }
 
     private void Move() // Tmp Controller
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     public void SlideDown()
     {
-        if (isJump || isGigantic)
+        if (isGigantic)
         {
             return;
         }
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     public void SlideUp()
     {
-        if (isJump || isGigantic || !isSlide)
+        if (isGigantic || !isSlide)
         {
             return;
         }
@@ -213,7 +213,6 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Game Over");
         gameManager.GameOver();
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
@@ -252,7 +251,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Invincibility()
     {
-        Debug.Log("Start Coroutine");
         isInvincibility = true;
         invincibilityPlatform.SetActive(true);
 
@@ -267,7 +265,6 @@ public class PlayerController : MonoBehaviour
         isInvincibility = false;
         invincibilityPlatform.SetActive(false);
         playerSprite.color = new Color(255, 255, 255, 1);
-        Debug.Log("Stop Coroutine");
     }
 
     IEnumerator Gigantic()
