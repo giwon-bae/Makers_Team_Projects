@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Bullet bullet;
 
     private Queue<int> platformindices = new Queue<int>();
-    private float platformWidth = 17.7f;
+    private float platformWidth = 17.4f;
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
@@ -51,9 +51,12 @@ public class GameManager : MonoBehaviour
             ShowBar();
             PlatformPositioning();
 
-            if (mapCount > summonBossTime + 1)
+            if (mapCount > summonBossTime + 1 && Boss.activeSelf == false)
             {
                 Boss.SetActive(true);
+                audioSource.Stop();
+                audioSource.clip = audioClips[1];
+                audioSource.Play();
             }
 
             playTime += Time.deltaTime;
@@ -85,11 +88,17 @@ public class GameManager : MonoBehaviour
 
     public void GoToTitleScene()
     {
+        audioSource.clip = audioClips[4];
+        audioSource.loop = false;
+        audioSource.Play();
         SceneManager.LoadScene("Title");
     }
 
     public void GoToMainScene()
     {
+        audioSource.clip = audioClips[4];
+        audioSource.loop = false;
+        audioSource.Play();
         SceneManager.LoadScene("Main");
     }
 
@@ -113,12 +122,20 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        audioSource.Stop();
+        audioSource.clip = audioClips[3];
+        audioSource.loop = false;
+        audioSource.Play();
         Panels[2].SetActive(true);
         Time.timeScale = 0;
     }
 
     public void GameClear()
     {
+        audioSource.Stop();
+        audioSource.clip = audioClips[2];
+        audioSource.loop = false;
+        audioSource.Play();
         Panels[3].SetActive(true);
         //playerAnimator.SetBool("IsBossDead", true);
         Time.timeScale = 0;

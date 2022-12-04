@@ -2470,7 +2470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 55}
+  m_AnchoredPosition: {x: 0, y: -15}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &359151868
@@ -3399,7 +3399,11 @@ MonoBehaviour:
   - {fileID: 581177822}
   - {fileID: 1659451051}
   audioClips:
-  - {fileID: 8300000, guid: a9e2e82606d734f47976a1d1013ae32c, type: 3}
+  - {fileID: 8300000, guid: de77fe99214315c4e9920311eba5c847, type: 3}
+  - {fileID: 8300000, guid: dd57b7be61f2b9244a2950cd2d2af173, type: 3}
+  - {fileID: 8300000, guid: 1caea3791c85b8b4eb0407619399c3d7, type: 3}
+  - {fileID: 8300000, guid: 25b8d27bf42e9eb4bb0f4f295e992ff7, type: 3}
+  - {fileID: 8300000, guid: 6e55d24740ecba248a332e25ced1404a, type: 3}
   ExpBar: {fileID: 1063001855}
   DistanceBar: {fileID: 764407791}
   audioSource: {fileID: 461464174}
@@ -3436,7 +3440,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
