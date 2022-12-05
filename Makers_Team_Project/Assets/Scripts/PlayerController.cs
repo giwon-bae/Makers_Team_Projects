@@ -59,27 +59,21 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        //Move();
+        Move();
         Timer();
         RangedAttack();
-
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    Debug.Log("Level Up");
-        //    LevelUp();
-        //}
     }
 
     private void Move() // Tmp Controller
     {
-        if (Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount)
+        if (Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount && gameManager.Panels[1].activeSelf == false)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             animator.SetTrigger("DoJump");
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0)
+        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0 && gameManager.Panels[1].activeSelf == false)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }

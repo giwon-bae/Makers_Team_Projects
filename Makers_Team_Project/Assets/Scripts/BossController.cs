@@ -15,7 +15,7 @@ public class BossController : MonoBehaviour
     [SerializeField] GameObject[] SnowBalls;
     [SerializeField] GameObject[] Enemies;
     [SerializeField] GameObject Laser;
-    [SerializeField] Transform SnowBallTransform;
+    [SerializeField] Transform[] SnowBallTransform;
     [SerializeField] Transform[] EnemyTransform;
     [SerializeField] Transform LaserTransform;
     Rigidbody2D rigid;
@@ -62,9 +62,7 @@ public class BossController : MonoBehaviour
             //Game Clear
             isDead = true;
             bossAnimator.SetBool("IsDead", true);
-            //gameManager.GameClear();
             Invoke("GameClear", 1f);
-            //Destroy(gameObject);
         }
     }
 
@@ -100,22 +98,30 @@ public class BossController : MonoBehaviour
         }
 
         bossAnimator.SetTrigger("DoAttack");
-        randomIdx = Random.Range(0, 3);
+        randomIdx = Random.Range(0, 4);
         switch (randomIdx)
         {
             case 0:
                 shootEnemy();
-                //change attackDelay - TODO
+                attackDelay = 1.5f;
                 break;
             case 1:
-                //shootLaser();
-                Attack();
-                //change attackDelay - TODO
+                StartCoroutine("Attack1");
+                attackDelay = 3f;
                 break;
             case 2:
-                Attack();
-                //change attackDelay - TODO
+                StartCoroutine("Attack2");
+                attackDelay = 6f;
                 break;
+            case 3:
+                StartCoroutine("Attack3");
+                attackDelay = 4f;
+                break;
+        }
+
+        if(HP <= 50)
+        {
+            attackDelay *= 0.75f;
         }
 
         curCool = 0f;
@@ -123,46 +129,18 @@ public class BossController : MonoBehaviour
 
     private void Attack()
     {
-        //curFireCool += Time.deltaTime;
-        //isFireReady = curFireCool > fireDelay;
-
-        //if (isLaserReady)
-        //{
-        //    curFireCool = 0f;
-        //}
-
-        //if (isFireReady)
-        //{
-        //    Instantiate(Bullet, BulletTransform.position, BulletTransform.rotation);
-        //    curFireCool = 0f;
-        //}
-
         int numberOfSnowBall = Random.Range(0, 3);
 
-        for(int i=0; i<=numberOfSnowBall; i++)
-        {
-            int typeOfSnowBall = Random.Range(0, SnowBalls.Length);
-            Vector2 PosOfSnowBall = new Vector2(SnowBallTransform.position.x, SnowBallTransform.position.y - Random.Range(-1f, 1f));
-            Instantiate(SnowBalls[typeOfSnowBall], PosOfSnowBall, SnowBallTransform.rotation);
-        }
+        //for(int i=0; i<=numberOfSnowBall; i++)
+        //{
+        //    int typeOfSnowBall = Random.Range(0, SnowBalls.Length);
+        //    Vector2 PosOfSnowBall = new Vector2(SnowBallTransform.position.x, SnowBallTransform.position.y - Random.Range(-1f, 1f));
+        //    Instantiate(SnowBalls[typeOfSnowBall], PosOfSnowBall, SnowBallTransform.rotation);
+        //}
     }
 
     private void shootEnemy()
     {
-        //curShootCool += Time.deltaTime;
-        //isShootReady = curShootCool > shootDelay;
-
-
-        //if (isLaserReady)
-        //{
-        //    curShootCool = 0f;
-        //}
-
-        //if (isShootReady)
-        //{
-        //    //Instantiate(Enermy, EnermyTransform.position, EnermyTransform.rotation);
-        //    curShootCool = 0f;
-        //}
 
         int typeOfEnemy = Random.Range(0, Enemies.Length);
         Instantiate(Enemies[typeOfEnemy], EnemyTransform[typeOfEnemy].position, EnemyTransform[typeOfEnemy].rotation);
@@ -192,6 +170,53 @@ public class BossController : MonoBehaviour
         if (collision.gameObject.tag == "PlayerBullet")
         {
             HP -= 1;
+        }
+    }
+
+    IEnumerator Attack1()
+    {
+        for(int i=0; i<6; i++)
+        {
+            if (i == 3)
+            {
+                bossAnimator.SetTrigger("DoAttack");
+                yield return new WaitForSeconds(0.1f);
+            }
+            Instantiate(SnowBalls[0], SnowBallTransform[i%3].position, SnowBallTransform[i%3].rotation);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator Attack2()
+    {
+        Instantiate(SnowBalls[0], SnowBallTransform[0].position, SnowBallTransform[0].rotation);
+        Instantiate(SnowBalls[0], SnowBallTransform[2].position, SnowBallTransform[2].rotation);
+        yield return new WaitForSeconds(0.4f);
+        bossAnimator.SetTrigger("DoAttack");
+        Instantiate(SnowBalls[0], SnowBallTransform[0].position, SnowBallTransform[0].rotation);
+        Instantiate(SnowBalls[0], SnowBallTransform[1].position, SnowBallTransform[1].rotation);
+        yield return new WaitForSeconds(0.6f);
+        bossAnimator.SetTrigger("DoAttack");
+        Instantiate(SnowBalls[0], SnowBallTransform[0].position, SnowBallTransform[0].rotation);
+        Instantiate(SnowBalls[0], SnowBallTransform[2].position, SnowBallTransform[2].rotation);
+        yield return new WaitForSeconds(0.5f);
+        bossAnimator.SetTrigger("DoAttack");
+        Instantiate(SnowBalls[0], SnowBallTransform[1].position, SnowBallTransform[1].rotation);
+        Instantiate(SnowBalls[0], SnowBallTransform[2].position, SnowBallTransform[2].rotation);
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    IEnumerator Attack3()
+    {
+        int numberOfSnowBall = Random.Range(1, 5);
+        for (int i=1; i<= numberOfSnowBall; i++)
+        {
+            if (i % 3 == 0)
+            {
+                bossAnimator.SetTrigger("DoAttack");
+            }
+            Instantiate(SnowBalls[1], SnowBallTransform[1].position, SnowBallTransform[1].rotation);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public AudioClip[] audioClips;
     public RectTransform ExpBar;
     public RectTransform DistanceBar;
+    public RectTransform bossHpBar;
+    public GameObject bossHpBarObj;
     public AudioSource audioSource;
     public Bullet bullet;
 
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 24;
+    private int summonBossTime = 3;//TODO - 24
 
     [SerializeField] PlayerController playerController;
     [SerializeField] Animator playerAnimator;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
             if (mapCount > summonBossTime + 1 && Boss.activeSelf == false)
             {
                 Boss.SetActive(true);
+                bossHpBarObj.SetActive(true);
                 audioSource.Stop();
                 audioSource.clip = audioClips[1];
                 audioSource.Play();
@@ -192,6 +195,9 @@ public class GameManager : MonoBehaviour
                 playerController.StopCoroutine("Gigantic");
                 playerController.StartCoroutine("Gigantic");
                 break;
+            case 6:
+                playerController.maxJumpCount += 1;
+                break;
         }
 
         if(index != 5)
@@ -220,13 +226,21 @@ public class GameManager : MonoBehaviour
         }
 
         //¿¹¿Ü
+        if (bullet.damage == 5)
+        {
+            checkIndex[0] = true;
+        }
         if (playerController.shield.activeSelf)
         {
             checkIndex[1] = true;
         }
-        if (bullet.damage == 5)
+        if (playerController.isGigantic)
         {
-            checkIndex[0] = true;
+            checkIndex[5] = true;
+        }
+        if (playerController.maxJumpCount >= 5)
+        {
+            checkIndex[6] = true;
         }
         
         for(int i=0; i<3; i++)
@@ -258,7 +272,10 @@ public class GameManager : MonoBehaviour
             expBarLength = 600f;
         }
         ExpBar.sizeDelta = new Vector2(expBarLength, ExpBar.sizeDelta.y);
-        DistanceBar.sizeDelta = new Vector2((float)(mapCount - 2) / summonBossTime * 600f, DistanceBar.sizeDelta.y);
+        DistanceBar.sizeDelta = new Vector2((float)(mapCount - 2) / summonBossTime * 350f, DistanceBar.sizeDelta.y);
+
+        BossController bossController = Boss.GetComponent<BossController>();
+        bossHpBar.sizeDelta = new Vector2(bossController.HP * 6f, bossHpBar.sizeDelta.y);
     }
 
     private void CoolDownIcon()
