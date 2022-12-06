@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 13f;
     public float fireDelay = 3f;
+    public float curFireCool = 3f;
     public float kickDelay = 3f;
     public float curKickCool = 3f;
     public float invincibilityDuration = 1f;
@@ -18,7 +19,6 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     public Animator animator;
 
-    private float curFireCool = 1f;
     private bool isJump = false;
     private bool isSlide = false;
     private bool isDead = false;
@@ -61,24 +61,24 @@ public class PlayerController : MonoBehaviour
         }
         Move();
         Timer();
-        RangedAttack();
+        //RangedAttack();
     }
 
     private void Move() // Tmp Controller
     {
-        if (Input.GetMouseButtonDown(0) && jumpCount < maxJumpCount && gameManager.Panels[1].activeSelf == false)
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount && gameManager.Panels[1].activeSelf == false)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             animator.SetTrigger("DoJump");
         }
-        else if (Input.GetMouseButtonUp(0) && playerRigidbody.velocity.y > 0 && gameManager.Panels[1].activeSelf == false)
+        else if (Input.GetButtonUp("Jump") && playerRigidbody.velocity.y > 0 && gameManager.Panels[1].activeSelf == false)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
         }
 
-        if (Input.GetMouseButton(1)&&!isJump&&!isGigantic&&!isSlide)
+        if (Input.GetButton("Slide") &&!isJump&&!isGigantic&&!isSlide)
         {
             isSlide = true;
             playerCollider.offset = slideColliderOffset;
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
             petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y - 1f);
             animator.SetBool("IsSlide", true);
         }
-        if (Input.GetMouseButtonUp(1)&& !isGigantic && isSlide)
+        if (Input.GetButtonUp("Slide") && !isGigantic && isSlide)
         {
             isSlide = false;
             playerCollider.offset = ColliderOffset;
@@ -95,9 +95,18 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsSlide", false);
         }
 
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetButton("Kick"))
         {
             MeleeAttack();
+        }
+
+        if (Input.GetButton("Fire"))
+        {
+            if (isFireReady)
+            {
+                Instantiate(bulletPrefab, petTransform.position, petTransform.rotation);
+                curFireCool = 0f;
+            }
         }
     }
 
@@ -163,7 +172,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void RangedAttack()
+    public void RangedAttack()
     {
         if (isFireReady)
         {

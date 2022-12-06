@@ -27,12 +27,13 @@ public class GameManager : MonoBehaviour
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 3;//TODO - 24
+    private int summonBossTime = 24;//TODO - 24
 
     [SerializeField] PlayerController playerController;
     [SerializeField] Animator playerAnimator;
     [SerializeField] GameObject Boss;
     [SerializeField] Image kickButtonImage;
+    [SerializeField] Image attackButtonImage;
 
     void Awake()
     {
@@ -60,6 +61,11 @@ public class GameManager : MonoBehaviour
                 audioSource.Stop();
                 audioSource.clip = audioClips[1];
                 audioSource.Play();
+            }
+
+            if (Panels[1].activeSelf)
+            {
+                GetAbility_Button();
             }
 
             playTime += Time.deltaTime;
@@ -166,6 +172,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
     public void GetAbility(int index) // 능력 획득
     {
         for (int i = 0; i < 3; i++)
@@ -255,6 +266,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GetAbility_Button()
+    {
+        if (Input.GetButton("Get1"))
+        {
+            GetAbility(abilityIndex[0]);
+        }
+        else if (Input.GetButton("Get2"))
+        {
+            GetAbility(abilityIndex[1]);
+        }
+        else if (Input.GetButton("Get3"))
+        {
+            GetAbility(abilityIndex[2]);
+        }
+    } // 능력 획득 버튼으로 실행
+
     private void ShowAbility() // 선택된 능력강화 버튼 UI에 띄우기
     {
         for(int i=0; i<3; i++)
@@ -281,6 +308,7 @@ public class GameManager : MonoBehaviour
     private void CoolDownIcon()
     {
         kickButtonImage.fillAmount = (playerController.curKickCool / playerController.kickDelay);
+        attackButtonImage.fillAmount = (playerController.curFireCool / playerController.fireDelay);
     }
 
     private void SelectPlatform()
