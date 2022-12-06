@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         //RangedAttack();
     }
 
-    private void Move() // Tmp Controller
+    private void Move()
     {
         if (Input.GetButtonDown("Jump") && jumpCount < maxJumpCount && gameManager.Panels[1].activeSelf == false)
         {
@@ -72,13 +72,32 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             animator.SetTrigger("DoJump");
+
+            if (isSlide)
+            {
+                isSlide = false;
+                playerCollider.offset = ColliderOffset;
+                playerCollider.size = ColliderSize;
+                petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+                animator.SetBool("IsSlide", false);
+            }
         }
         else if (Input.GetButtonUp("Jump") && playerRigidbody.velocity.y > 0 && gameManager.Panels[1].activeSelf == false)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.8f;
-        }
 
-        if (Input.GetButton("Slide") &&!isJump&&!isGigantic&&!isSlide)
+            if (isSlide)
+            {
+                isSlide = false;
+                playerCollider.offset = ColliderOffset;
+                playerCollider.size = ColliderSize;
+                petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+                animator.SetBool("IsSlide", false);
+            }
+        }
+        
+
+        if (Input.GetButton("Slide") && !isJump && !isGigantic && !isSlide)
         {
             isSlide = true;
             playerCollider.offset = slideColliderOffset;
@@ -233,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.contacts[0].normal.y > 0.7f){
+        if (collision.gameObject.tag == "Platform" && collision.contacts[0].normal.y > 0.7f){
             isJump = false;
             jumpCount = 0;
         }
@@ -241,7 +260,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isJump = true;
+        if(collision.gameObject.tag == "Platform")
+        {
+            isJump = true;
+        }
+        
     }
 
     IEnumerator Kick()
@@ -257,7 +280,7 @@ public class PlayerController : MonoBehaviour
         isInvincibility = true;
         invincibilityPlatform.SetActive(true);
 
-        for (int i=0; i<invincibilityDuration/1; i++)
+        for (int i=0; i<invincibilityDuration; i++)
         {
             playerSprite.color = new Color(255, 255, 255, 0.4f);
             yield return new WaitForSeconds(0.5f);
