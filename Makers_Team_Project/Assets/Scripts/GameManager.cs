@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private int[] abilityIndex = new int[3];
     private int randomPlatformIdx;
     private int mapCount = 2;
-    private int summonBossTime = 24;//TODO - 24
+    private int summonBossTime = 24;
 
     [SerializeField] PlayerController playerController;
     [SerializeField] Animator playerAnimator;
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
             audioSource.clip = audioClips[0];
             audioSource.loop = true;
             audioSource.Play();
+            //PlayerPrefs.DeleteAll();
         }
     }
 
@@ -119,12 +120,14 @@ public class GameManager : MonoBehaviour
             Panels[i].SetActive(false);
         }
 
+
+        //Initialize
         platformindices.Enqueue(0);
         SelectPlatform();
         platformindices.Enqueue(randomPlatformIdx);
         Patterns[randomPlatformIdx].SetActive(true);
         Patterns[randomPlatformIdx].transform.position = new Vector2(platformWidth, 0);
-        bullet.damage = 2;
+        bullet.damage = 3;
 
         Time.timeScale = 1;
     }
@@ -194,7 +197,7 @@ public class GameManager : MonoBehaviour
                 playerController.shield.SetActive(true);
                 break;
             case 2:
-                playerController.fireDelay *= 0.8f;
+                playerController.fireDelay *= 0.75f;
                 break;
             case 3:
                 playerController.kickDelay *= 0.8f;

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 5f;
-    public int damage = 2;
-
+    public float speed;
+    public int damage;
     public GameObject effectPrefab;
 
     PlayerController playerCtrl;
@@ -18,13 +17,9 @@ public class Bullet : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rend = GetComponent<SpriteRenderer>();
-        Destroy(gameObject, 3.5f);
+        Destroy(gameObject, 1.75f);
         switch (damage)
         {
-            case 3:
-                rend.flipX = false;
-                animator.SetBool("damage3", true);
-                break;
             case 4:
                 rend.flipX = false;
                 animator.SetBool("damage4", true);
@@ -32,6 +27,10 @@ public class Bullet : MonoBehaviour
             case 5:
                 rend.flipX = false;
                 animator.SetBool("damage5", true);
+                break;
+            case 6:
+                rend.flipX = false;
+                animator.SetBool("damage6", true);
                 break;
         }
     }

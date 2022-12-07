@@ -73,14 +73,14 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             animator.SetTrigger("DoJump");
 
-            if (isSlide)
-            {
-                isSlide = false;
-                playerCollider.offset = ColliderOffset;
-                playerCollider.size = ColliderSize;
-                petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
-                animator.SetBool("IsSlide", false);
-            }
+            //if (isSlide)
+            //{
+            //    isSlide = false;
+            //    playerCollider.offset = ColliderOffset;
+            //    playerCollider.size = ColliderSize;
+            //    petTransform.position = new Vector2(petTransform.position.x, petTransform.position.y + 1f);
+            //    animator.SetBool("IsSlide", false);
+            //}
         }
         else if (Input.GetButtonUp("Jump") && playerRigidbody.velocity.y > 0 && gameManager.Panels[1].activeSelf == false)
         {
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         }
         
 
-        if (Input.GetButton("Slide") && !isJump && !isGigantic && !isSlide)
+        if (Input.GetButton("Slide") && !isGigantic && !isSlide)
         {
             isSlide = true;
             playerCollider.offset = slideColliderOffset;
@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform" && collision.contacts[0].normal.y > 0.7f){
+        if (collision.gameObject.tag == "Platform"){
             isJump = false;
             jumpCount = 0;
         }

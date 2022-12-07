@@ -127,18 +127,6 @@ public class BossController : MonoBehaviour
         curCool = 0f;
     }
 
-    private void Attack()
-    {
-        int numberOfSnowBall = Random.Range(0, 3);
-
-        //for(int i=0; i<=numberOfSnowBall; i++)
-        //{
-        //    int typeOfSnowBall = Random.Range(0, SnowBalls.Length);
-        //    Vector2 PosOfSnowBall = new Vector2(SnowBallTransform.position.x, SnowBallTransform.position.y - Random.Range(-1f, 1f));
-        //    Instantiate(SnowBalls[typeOfSnowBall], PosOfSnowBall, SnowBallTransform.rotation);
-        //}
-    }
-
     private void shootEnemy()
     {
 
