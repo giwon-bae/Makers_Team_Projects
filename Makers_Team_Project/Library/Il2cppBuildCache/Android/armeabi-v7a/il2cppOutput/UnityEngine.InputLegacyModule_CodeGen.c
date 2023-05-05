@@ -28,22 +28,22 @@ extern void CameraRaycastHelper_RaycastTry2D_mAA0B0BAC7BE8A2F640A236BB6655EB47E5
 extern void CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8BC69CFE68F43E8 (void);
 // 0x00000008 UnityEngine.GameObject UnityEngine.CameraRaycastHelper::RaycastTry2D_Injected(UnityEngine.Camera,UnityEngine.Ray&,System.Single,System.Int32)
 extern void CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21 (void);
-// 0x00000009 System.Boolean UnityEngine.Input::GetKeyInt(UnityEngine.KeyCode)
-extern void Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D (void);
-// 0x0000000A System.Single UnityEngine.Input::GetAxisRaw(System.String)
+// 0x00000009 System.Single UnityEngine.Input::GetAxisRaw(System.String)
 extern void Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B (void);
+// 0x0000000A System.Boolean UnityEngine.Input::GetButton(System.String)
+extern void Input_GetButton_m95EE8314087068F3AA9CEF3C3F6A246D55C4734C (void);
 // 0x0000000B System.Boolean UnityEngine.Input::GetButtonDown(System.String)
 extern void Input_GetButtonDown_m2001112EBCA3D5C7B0344EF62C896667F7E67DDF (void);
-// 0x0000000C System.Boolean UnityEngine.Input::GetMouseButton(System.Int32)
+// 0x0000000C System.Boolean UnityEngine.Input::GetButtonUp(System.String)
+extern void Input_GetButtonUp_m15AA6B42BD0DDCC7802346E49F30653D750260DD (void);
+// 0x0000000D System.Boolean UnityEngine.Input::GetMouseButton(System.Int32)
 extern void Input_GetMouseButton_m27BF2DDBF38A38787B83A13D3E6F0F88F7C834C1 (void);
-// 0x0000000D System.Boolean UnityEngine.Input::GetMouseButtonDown(System.Int32)
+// 0x0000000E System.Boolean UnityEngine.Input::GetMouseButtonDown(System.Int32)
 extern void Input_GetMouseButtonDown_m466D81FDCC87C9CB07557B39DCB435EB691F1EF3 (void);
-// 0x0000000E System.Boolean UnityEngine.Input::GetMouseButtonUp(System.Int32)
+// 0x0000000F System.Boolean UnityEngine.Input::GetMouseButtonUp(System.Int32)
 extern void Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022 (void);
-// 0x0000000F UnityEngine.Touch UnityEngine.Input::GetTouch(System.Int32)
+// 0x00000010 UnityEngine.Touch UnityEngine.Input::GetTouch(System.Int32)
 extern void Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F (void);
-// 0x00000010 System.Boolean UnityEngine.Input::GetKey(UnityEngine.KeyCode)
-extern void Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429 (void);
 // 0x00000011 UnityEngine.Vector3 UnityEngine.Input::get_mousePosition()
 extern void Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E (void);
 // 0x00000012 UnityEngine.Vector2 UnityEngine.Input::get_mouseScrollDelta()
@@ -98,14 +98,14 @@ static Il2CppMethodPointer s_methodPointers[38] =
 	CameraRaycastHelper_RaycastTry2D_mAA0B0BAC7BE8A2F640A236BB6655EB47E5408C9D,
 	CameraRaycastHelper_RaycastTry_Injected_mFAED8F3DC204691A92849F36D8BC69CFE68F43E8,
 	CameraRaycastHelper_RaycastTry2D_Injected_m1AB3B5B899C17D5D6FC41D8F8CF2BE549F7D9F21,
-	Input_GetKeyInt_mCBF4A2379EF913E589DFF4AE9C9407D0AC6B4E4D,
 	Input_GetAxisRaw_mC07AC23FD8D04A69CDB07C6399C93FFFAEB0FC5B,
+	Input_GetButton_m95EE8314087068F3AA9CEF3C3F6A246D55C4734C,
 	Input_GetButtonDown_m2001112EBCA3D5C7B0344EF62C896667F7E67DDF,
+	Input_GetButtonUp_m15AA6B42BD0DDCC7802346E49F30653D750260DD,
 	Input_GetMouseButton_m27BF2DDBF38A38787B83A13D3E6F0F88F7C834C1,
 	Input_GetMouseButtonDown_m466D81FDCC87C9CB07557B39DCB435EB691F1EF3,
 	Input_GetMouseButtonUp_m2BA562F8C4FE8364EEC93970093E776371DF4022,
 	Input_GetTouch_m6A2A31482B1A7D018C3AAC188C02F5D14500C81F,
-	Input_GetKey_mFDD450A4C61F2930928B12287FFBD1ACCB71E429,
 	Input_get_mousePosition_m79528BC2F30C57054641F709C855130AE586AC0E,
 	Input_get_mouseScrollDelta_m018B3C74FC710A166684FC8391CAC93D8EC0ADB7,
 	Input_get_imeCompositionMode_m04AD6A8C7FEE55E7C4F70885DB5AF222E9F904E5,
@@ -152,14 +152,14 @@ static const int32_t s_InvokerIndices[38] =
 	1350,
 	1337,
 	1337,
-	1879,
 	1895,
+	1882,
+	1882,
 	1882,
 	1879,
 	1879,
 	1879,
 	1901,
-	1879,
 	1952,
 	1951,
 	1935,

@@ -16,7 +16,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
@@ -74,6 +73,10 @@ ScriptsOnlyBuild:
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
@@ -153,6 +156,10 @@ ScriptsOnlyBuild:
     - Class: 48
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -323,7 +330,7 @@ ScriptsOnlyBuild:
     className: EnumerableTestState
   - hash:
       serializedVersion: 2
-      Hash: 18eb8fab91c6381664e497307ef82491
+      Hash: 15d32dbb3df0bf3da81de79a73f97935
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BossController
@@ -509,7 +516,7 @@ ScriptsOnlyBuild:
     className: PlayerQuitHandler
   - hash:
       serializedVersion: 2
-      Hash: b829ea88d7cc63e565b0293c8b0b9c30
+      Hash: 4545e17b55597a06ae7450d55f4a83c5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -539,7 +546,7 @@ ScriptsOnlyBuild:
     className: PlayModeRunnerCallback
   - hash:
       serializedVersion: 2
-      Hash: a3884f0bcc49b904be9f26a643b76cae
+      Hash: b4ef321deeb26756ed95538d815f22a5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -781,4 +788,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Title.unity
   - Assets/Scenes/Main.unity
-  playerPath: "C:/Users/rldnj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/\uAC8C\uC784 \uAC1C\uBC1C/Kick&Run.apk"
+  playerPath: "C:/Users/rldnj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/\uAC8C\uC784 \uAC1C\uBC1C/Kick&Run_Mobile/Kick&Run.apk"
